@@ -10,7 +10,7 @@ const router = require('./Routes/Router');
 
 
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 
 
