@@ -43,7 +43,6 @@ const razorpay = new Razorpay({
 
 app.post('/create-order', async (req, res) => {
     try {
-
         const {amount, receipt}  = req.body
 
         const options = {
@@ -54,8 +53,10 @@ app.post('/create-order', async (req, res) => {
 
         const order = await razorpay.orders.create(options);
 
+        console.log('It is run to create order....')
+
         // Send the order details back to the frontend
-        res.json(order);
+        res.status(200).json(order);
     } catch (error) {
         console.error("Error creating order:", error);
         res.status(500).send("Error creating order");
@@ -72,6 +73,7 @@ app.post('/create-order', async (req, res) => {
 
 
 app.post('/verify-payment', async (req, res) => {
+    
     // console.log("verify payment api run")
     // console.log(req.body)
 
@@ -79,14 +81,20 @@ app.post('/verify-payment', async (req, res) => {
 
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = paymentDetails;
 
+    console.log("Its Key secret above")
+
     //Secret_Key
-    const key_secret = process.env.RAZORPAY_KEY_SECRET 
+    const key_secret = process.env.RAZORPAY_KEY_SECRET  
+
+     console.log("Its Key secret below")
 
     // Generate the expected signature
     const generated_signature = crypto
         .createHmac('sha256', key_secret)
         .update(razorpay_order_id + "|" + razorpay_payment_id)
         .digest('hex');
+
+        console.log("Its totally verify and now store data to DB")
 
     if (generated_signature === razorpay_signature) {
         // console.log("Payment verified successfully");
@@ -95,20 +103,33 @@ app.post('/verify-payment', async (req, res) => {
         const userData = await User_Model.create({
                                                   user_name: formData.name,
                                                   user_number: formData.phone,
-                                                  attendance: formData.attend,
+                                                  address: formData.address,
+                                                  city: formData.city,
+                                                  adhaar: formData.adhaar,
                                                   attend_someone: formData.someone,
                                                   how_many_people: formData.noPeople,
                                                   support: formData.support,
                                                  })
 
 
-        res.json({ status: 'success', message: 'Payment verified successfully' });
+            // const phone = formData.phone; // Customer Number
+            // const amount = payment.amount / 100;
+
+        
+        res.status(200).json({ status: 'success', message: 'Payment verified successfully' });
+
     } else {
         // Signature mismatch
         console.error("Payment verification failed");
         res.status(400).json({ status: 'failure', message: 'Invalid signature' });
     }
 });
+
+
+
+
+
+
 
 
 

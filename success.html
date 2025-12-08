@@ -7,7 +7,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<title>Reunion Pass</title>
+<title>Gala Re-union Pass</title>
+
 <style>
 :root{
   --bg:#071022;
@@ -29,12 +30,14 @@ body{
   color:#e6eef8;
   display:flex;align-items:center;justify-content:center;padding:28px;
 }
+
 .container{
   width:100%;max-width:980px;
   display:flex;gap:24px;flex-direction:column;align-items:center;
 }
 .header{
   text-align:center;
+  margin: 20px;
 }
 .header h1{margin:0;font-size:1.05rem;font-weight:700;letter-spacing:0.6px}
 .header p{margin:6px 0 0;color:rgba(230,238,248,0.75);font-size:0.92rem}
@@ -64,8 +67,8 @@ body{
   display:flex;align-items:center;justify-content:center;font-weight:800;color:#051426;font-size:0.85rem;
 }
 .event-info{flex:1}
-.event-title{font-family: 'Orbitron', sans-serif;font-size:1.6rem;margin:0;text-transform:uppercase;line-height:1}
-.tagline{margin-top:6px;color:rgba(230,238,248,0.8);font-weight:600;font-size:0.9rem}
+.event-title{font-family: 'Orbitron', sans-serif; font-size:1.6rem; font-weight: 600; margin:0;text-transform:uppercase;line-height:1}
+.tagline{margin-top:10px;color:rgba(230,238,248,0.8);font-weight:600;font-size:0.9rem}
 .details-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
 .detail{background:rgba(255,255,255,0.02);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
 .detail .label{font-size:0.72rem;color:rgba(230,238,248,0.6);text-transform:uppercase}
@@ -115,23 +118,29 @@ body{
   .btn{display:none}.stub .qr{background:#eee}
 }
 </style>
+
 </head>
+
 <body>
-  <div class="container">
+
+
+  <div>
     <div class="header">
       <h1>Payment received — your pass is ready</h1>
       <p>Download this ticket</p>
     </div>
+
+
 
     <div class="ticket-wrap">
 
       <div class="ticket" role="article">
         <div class="ticket-main">
           <div class="title-row">
-            <div class="event-badge">VIP</div>
+            <!-- <div class="event-badge">VIP</div> -->
             <div class="event-info">
-              <div class="event-title">Reunion Event</div>
-              <div class="tagline">Official Freshers Party · March 28, 2026</div>
+              <div class="event-title">Gala Re-union Pass</div>
+              <div class="tagline">Official Batch 2001 · March 28, 2026</div>
             </div>
           </div>
 
@@ -141,6 +150,12 @@ body{
             <div class="detail"><div class="label">Venue</div><div class="value">The Grand Ballroom</div></div>
             <div class="detail"><div class="label">No. of People</div><div id="noPeople" class="value">X</div></div>
           </div>
+
+          <div class="qr-box" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <div id="qrcode" style="text-align: center;"></div>
+              <h4 id="qr-text-show"></h4>
+          </div>
+
 
           <div class="footer-row">
             <div class="count-pill">Admit: 1 Person</div>
@@ -153,6 +168,10 @@ body{
 
 
     </div>
+
+
+
+
   </div>
 
 
@@ -168,10 +187,57 @@ body{
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 
-
+ <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
 
   <script>
+
+
+//---------------------------------------------------
+//             QR Generator
+//---------------------------------------------------
+
+const uniquePaymentId = "PAY_" + Date.now(); 
+    // Example output: PAY_1733662467123
+
+    // ✅ Generate QR as soon as the page opens
+    window.onload = function () {
+      generateQRCode(uniquePaymentId);
+      document.getElementById("qr-text-show").innerText = uniquePaymentId;
+    };
+
+
+    
+    function generateQRCode(text) {
+      const container = document.getElementById("qrcode");
+      container.innerHTML = ""; // clear old QR
+
+      new QRCode(container, {
+        text: text,
+        width: 100,
+        height: 100,
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+ //-------------------------------------------------------------
+ //             Download PDF
+ //-------------------------------------------------------------
+
+
+
 
 
   // Use this function for the Download PDF button
@@ -193,7 +259,7 @@ body{
     const canvas = await html2canvas(node, {
       scale,
       useCORS: true,          // allow cross-origin images if configured
-      backgroundColor: null,  // capture transparent background if any
+      backgroundColor: "#000",  // capture transparent background if any
       scrollY: -window.scrollY // stable capture even if page scrolled
     });
 

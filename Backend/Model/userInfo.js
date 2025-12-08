@@ -12,7 +12,17 @@ const UserInfo_Schema = new mongoose.Schema({
         required: true, 
     },
 
-    attendance: {
+    address: {
+        type: String,
+        required: true,
+    },
+
+    city: {
+        type: String,
+        required: true,
+    },
+
+    adhaar: {
         type: String,
         required: true,
     },
