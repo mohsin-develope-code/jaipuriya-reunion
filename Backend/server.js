@@ -13,7 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 
-onst allowedOrigins = [
+const allowedOrigins = [
   "https://www.ultimatejaipurians.in",
 ];
 
