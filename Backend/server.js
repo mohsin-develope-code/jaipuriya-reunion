@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 8000;
 
 
 onst allowedOrigins = [
-  "http://https://www.ultimatejaipurians.in",
+  "https://www.ultimatejaipurians.in",
 ];
 
 
