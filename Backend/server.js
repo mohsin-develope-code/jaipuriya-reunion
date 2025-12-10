@@ -14,9 +14,14 @@ const PORT = process.env.PORT || 8000;
 
 
 const allowedOrigins = [
+<<<<<<< HEAD
   "http://localhost:5173",
    "http://127.0.0.1:5500",
    "http://localhost:5500",
+  "www.ultimatejaipurians.in",
+=======
+  "https://www.ultimatejaipurians.in",
+>>>>>>> fa8317deb2692313bb3feab40d8daf14fd9e66f4
 ];
 
 
@@ -39,6 +44,7 @@ origin: function (origin, callback) {
   })
 );
 
+<<<<<<< HEAD
 
 
 
@@ -47,6 +53,8 @@ origin: function (origin, callback) {
 
 
 
+=======
+>>>>>>> fa8317deb2692313bb3feab40d8daf14fd9e66f4
 
 app.use(bodyParser.json());
 app.use(express.json());
