@@ -43,13 +43,13 @@ input, textarea {
 /* //------------------------------------ */
 
 .contact-section{
-     margin-top: 60px;
-    border-top: 1px solid grey;
+    margin-top: 60px;
+    border-top:1px solid rgba(255,255,255,0.03);
     display: flex;
     justify-content: center;
     align-items: start;
     gap: 140px;
-    padding: 180px 200px;
+    padding: 80px 200px;
 }
 
 .contact-left h1{

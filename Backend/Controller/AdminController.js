@@ -77,12 +77,22 @@ async function handleAdminLogin(req, res) {
 
 async function handleGetUserPass(req, res){
 
-    console.log("login running")
+    const {email, phone} = req.body;
 
-    console.log(req.body);
+    try {
+
+        const findUser = await User_Model.findOne({ 
+                                                  user_email: email, 
+                                                  user_number: phone
+                                                })
 
 
-    res.status(200).json({status: true, data: userData,})
+        res.status(200).json({status: true, formData: findUser})
+        
+    } catch (error) {
+        res.status(500).json({status: false, message: 'Something is error.....'})
+    }
+
 }
 
 
