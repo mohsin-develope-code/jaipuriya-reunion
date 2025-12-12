@@ -74,6 +74,17 @@ async function handleAdminLogin(req, res) {
 }
 
 
+async function handleAdminLogout(req, res) {
+
+     res.cookie("token", "");
+
+     res.status(200)
+       .json({message: "Logout Successful",
+              status: true});
+    
+}
+
+
 
 async function handleGetUserPass(req, res){
 
@@ -97,9 +108,9 @@ async function handleGetUserPass(req, res){
 
 
 
-
 module.exports = {
     handleGetUser,
     handleAdminLogin,
     handleGetUserPass,
+    handleAdminLogout,
 }

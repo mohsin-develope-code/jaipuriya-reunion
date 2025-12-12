@@ -51,6 +51,17 @@ const UserInfo_Schema = new mongoose.Schema({
         type: String,
         required: true,
     },
+
+    donateAmt: {
+        type: Number,
+        required: true,
+    },
+
+    totalAmt: {
+        type: Number,
+        required: true,
+    },
+
 })
 
 

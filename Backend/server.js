@@ -8,9 +8,17 @@ const User_Model = require('./Model/userInfo')
 const mongoose = require('mongoose');
 const router = require('./Routes/Router');
 
+const cron = require("node-cron");
+const nodemailer = require("nodemailer");
+const path = require("path");
+const XLSX = require("xlsx");
+const multer = require('multer');
+
 
 const app = express();
 const PORT = process.env.PORT || 8000;
+
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } }); // 10MB max
 
 
 const allowedOrigins = [
@@ -51,6 +59,9 @@ app.use(express.urlencoded({ extended: true }));
 mongoose.connect(process.env.MONGO_URL)
         .then(()=> console.log("Database connected with your Backend..."))
         .catch((err) => console.log("Something is error to connect of database and Error is"+ err))
+
+
+
 
 
 
@@ -139,6 +150,8 @@ app.post('/verify-payment', async (req, res) => {
                                                   how_many_people: formData.noPeople,
                                                   support: formData.support,
                                                   qr_code: uniquePassCode,
+                                                  donateAmt: formData.donateAmt,
+                                                  totalAmt: formData.totalPayPrice,
                                                  })
 
 
@@ -157,6 +170,140 @@ app.post('/verify-payment', async (req, res) => {
 
 
 
+
+
+//-----------------------------------------
+//       NodeMailer to send email 
+//-----------------------------------------
+
+
+const transporter = nodemailer.createTransport({
+       host: 'smtp.gmail.com',
+       port: 587,
+       secure: false,
+       auth: {
+          user: 'mohsin06388@gmail.com',   // your email
+          pass: 'rnyv gyew qeek ddwm',    // your app password
+        }
+})
+
+
+
+
+transporter.verify()
+  .then(() => console.log("🔁 Mailer ready"))
+  .catch(err => {
+    console.error("Mailer verification failed — check credentials and network:", err);
+    // optionally exit process if mailer is required
+    // process.exit(1);
+  });
+
+
+
+  // Convert json to excel file
+  async function createExcelFile(data, filename = "users.xlsx") {
+  if (!data || data.length === 0) {
+    console.log("No data to export");
+    return null;
+  }
+
+  const cleaned = data.map(item => ({
+    ...item,
+    _id: item._id.toString()
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(cleaned);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+  const filePath = path.join(__dirname, "exports", filename);
+
+  XLSX.writeFile(workbook, filePath); // <-- writes to backend folder
+
+  return filePath; // return full path
+}
+
+
+cron.schedule("32 15 * * *", async () => {
+
+     console.log("⏰ Running daily email at 8 AM...");
+      
+     try {
+
+      const userData = await User_Model.find().lean();
+
+      
+
+      const filePath = await createExcelFile(userData, "users.xlsx");
+
+
+       const info = await transporter.sendMail({
+            from: 'mohsin06388@gmail.com',
+            to: "mohsin06388@gmail.com",
+            subject: "Daily Report",
+            text: "Good morning! Here's your daily update. if you have any query tell me.",
+
+            attachments: [
+                         {
+                           filename: "users.xlsx",
+                           path: filePath,  // absolute or relative path
+                           contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                         }
+                       ]
+          })
+
+          console.log("📨 Email sent:", info.messageId);
+
+     } catch (error) {
+         console.error("❌ Error sending email:", err);
+     }
+
+
+}, { timezone: "Asia/Kolkata"})
+
+
+
+
+
+
+app.post('/api/upload-pdf', upload.single('file'), async (req, res) => {
+
+  console.log("===========sent pdf after payemnt ready api called")
+  try {
+    // Basic validation
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded.' });
+
+    // Get optional form fields
+    const to = 'mosn0078600@gmail.com';
+    const subject = req.body.subject || 'Gala Re-Union Ticket';
+    const text = req.body.text || 'Your Pass is Ready.';
+
+    // Send email using buffer (no disk write)
+    const mailOptions = {
+      from: 'mohsin06388@gmail.com',
+      to,
+      subject,
+      text,
+      attachments: [
+        {
+          filename: req.file.originalname,
+          content: req.file.buffer,
+          contentType: req.file.mimetype // should be application/pdf
+        }
+      ]
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+
+    // Optionally log: info.messageId etc
+    console.log('Email sent:', info.messageId);
+
+    res.json({ ok: true, messageId: info.messageId });
+  } catch (error) {
+    console.error('Upload / email error:', error);
+    res.status(500).json({ error: error.message || 'Server error' });
+  }
+});
 
 
 
