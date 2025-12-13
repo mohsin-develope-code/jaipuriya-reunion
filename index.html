@@ -690,6 +690,121 @@ nav.site-nav { z-index: 100;}
 }
 
 
+
+.mobile-size{
+  display: flex; 
+  align-items: center;
+  justify-content: start; 
+  gap:50px
+}
+
+@media(max-width: 786px) {
+  .mobile-size{
+    flex-direction: column;
+    gap: 1px;
+    align-items: start;
+  }
+}
+
+
+
+   /* Button loader fix here */
+
+/* hide loader default */
+.btn {
+  position: relative;
+  padding: 12px 22px;
+  border: none;
+  background: #4A6CF7;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  display: none;
+  animation: spin 0.7s linear infinite;
+}
+
+.btn.loading .btn-text {
+  opacity: 0.5;
+}
+
+.btn.loading .loader {
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+
+
+ /* Venue Card POP */
+#eventPopupOverlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+}
+
+#eventPopupBox {
+  background: var(--bg, #1c1c1c);
+  padding: 24px;
+  border-radius: 14px;
+  width: 420px;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+  border-top: 4px solid var(--accent-purple);
+  animation: popupScale .25s ease;
+}
+
+#eventPopupBox h3{
+  font-size: 50px;
+}
+
+@media(max-width: 786px){
+  #eventPopupOverlay {
+    padding: 30px;
+  }
+}
+
+
+@keyframes popupScale {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+#eventPopupClose {
+  margin-top: 14px;
+  padding: 8px 16px;
+  background: var(--accent-purple);
+  border: none;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+
     </style>
 
 
@@ -798,7 +913,14 @@ nav.site-nav { z-index: 100;}
 
       <div class="cards">
 
-        <div class="card glass-panel" style="border-top-color:var(--accent-purple);">
+        <div class="card glass-panel eventPopupTrigger" 
+               data-title="When?"
+               data-date="Saturday, 28 March 2026"
+               data-time="Doors open at 6:00 PM"
+               data-icon="calendar-days"
+               style="border-top-color:var(--accent-purple);">
+          
+          
           <div class="icon-wrap" style="background: rgba(124,58,237,0.12); color:var(--accent-purple);">
             <i data-lucide="calendar-days" style="width:24px;height:24px;"></i>
           </div>
@@ -807,7 +929,17 @@ nav.site-nav { z-index: 100;}
           <div class="sub-muted">Doors open at 6:00 PM</div>
         </div>
 
-        <div class="card glass-panel" style="border-top-color:var(--accent-cyan);">
+
+
+
+        <div class="card glass-panel eventPopupTrigger" 
+              data-title="Where?"
+              data-date="The Grand Ballroom"
+              data-time="Kanpur Nagar"
+              data-icon="map-pin"
+             style="border-top-color:var(--accent-cyan);">
+          
+          
           <div class="icon-wrap" style="background: rgba(0,243,255,0.08); color:var(--accent-cyan);">
             <i data-lucide="map-pin" style="width:24px;height:24px;"></i>
           </div>
@@ -816,7 +948,16 @@ nav.site-nav { z-index: 100;}
           <div class="sub-muted">Kanpur</div>
         </div>
 
-        <div class="card glass-panel" style="border-top-color:var(--accent-pink);">
+
+
+
+        <div class="card glass-panel eventPopupTrigger" 
+             style="border-top-color:var(--accent-pink);"
+              data-title="Dress Code"
+              data-date="Party Dress"
+              data-time="Dress to glow"
+              data-icon="shirt">
+
           <div class="icon-wrap" style="background: rgba(244,114,182,0.08); color:var(--accent-pink);">
             <i data-lucide="shirt" style="width:24px;height:24px;"></i>
           </div>
@@ -826,14 +967,44 @@ nav.site-nav { z-index: 100;}
         </div>
 
       </div>
+
+
+
+
+
+
     </div>
   </section>
 
 
 
+<div id="eventPopupOverlay">
+  <div id="eventPopupBox">
+
+    <div class="icon-wrap" style="background: rgba(124,58,237,0.12); color:var(--accent-purple);">
+      <i id="popupIcon" style="width:24px;height:24px;"></i>
+    </div>
+
+    <div class="h3" id="popupTitle"></div>
+    <div class="muted" id="popupDate"></div>
+    <div class="sub-muted" id="popupTime"></div>
+
+    <button id="eventPopupClose">Close</button>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
   <!-- //50 photos here in carousel -->
 
-    <section id="production" class="production-carousel">
+    <section id="memories" class="production-carousel">
 
         <div class="production-wrapper">
 
@@ -984,38 +1155,71 @@ nav.site-nav { z-index: 100;}
 
           <div style="padding-top: 8px;">
             <label class="field-label">Will you be attending alone or with your spouse and/or kids?</label>
-            
-            <ul class="checkbox-list spouse">
+          
+            <div class="mobile-size">
+              <div>
+               <ul class="checkbox-list spouse">
 
               <div style="display: flex; gap: 10px;">
                 <li class="checkbox-row">
                 <label class="round-check">
-                  <input type="checkbox" value="Alone" class="someone-check">
+                  <input type="checkbox" value="stag" class="someone-check">
                   <span class="circle">Stag</span>
                 </label>
               </li>
 
               <li class="checkbox-row">
                 <label class="round-check">
-                  <input type="checkbox" value="Spouse" class="someone-check">
+                  <input type="checkbox" value="noStag" class="someone-check">
                   <span class="circle">+1</span>
                 </label>
               </li>
               </div>
 
             </ul>
-          </div>
 
-         
-          <div>
-            <label class="field-label" style="padding-bottom: 3px;" for="people-number">What will be the total number of people attending?</label>
-            <div class="input-wrap">
-              <input id="people-number" type="number" class="form-input" placeholder="0" required>
+              </div>
+
+              <div style="font-size: 15px; ">Total No. of Attendees: <span style="padding-left: 3px;" id="attend">0</span>
+              </div>
             </div>
+          
           </div>
 
-          
-          <div style="padding-top: 10px; padding-bottom: 0;">
+
+          <!-- donation part here -->
+
+          <!-- <div style="border-top: 1px solid rgba(255, 255, 255, 0.747); margin: 0 5px;"></div> -->
+
+          <div style="padding-bottom: 5px">
+            <p style="margin-top: 0; font-size: 15px; color: rgba(255, 255, 255, 0.747);">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, asperiores, ratione quaerat natus officia animi adipisci quia veniam, 
+              enim ipsa dolorem sapiente delectus fugit inventore. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias, nisi.
+            </p>
+            
+            <div>
+              <div class="input-wrap">
+                <span class="input-icon"><i data-lucide="hand-coins" style="width:16px;height:16px;color:#9ca3af;"></i></span>
+                <input id="donate" type="tel" class="form-input" placeholder="Donation Amount" required>
+              </div>
+              <!-- minimum 500 donation amount -->
+              <div id="minDonate" style="display: none; margin-left: 40px; padding: 5px; font-size: 14px; color: rgb(255, 64, 64);"> 
+                Donate minimum 500 Rs.  
+              </div>
+            </div>
+
+          </div>
+
+          <div style="border-top: 0.5px solid rgba(255, 255, 255, 0.747);; margin: 0 5px; padding: 0;"></div>
+
+          <div>
+            <h3 style="margin: 0; padding: 0px 5px;">Grand Total: <span id="grandTotal" ></span></h3>
+          </div>
+
+          <div style="border-top: 0.5px solid rgba(255, 255, 255, 0.747);; margin: 0 5px; padding: 0;"></div>
+
+
+            <div style="padding-top: 10px; padding-bottom: 0;">
             <label class="field-label">Do you need support in arranging accommodation in Kanpur?</label>
 
             <ul class="checkbox-list">
@@ -1036,31 +1240,10 @@ nav.site-nav { z-index: 100;}
           </div>
 
 
-          <!-- donation part here -->
-
-          <div style="border-top: 1px solid white; margin: 0 5px;"></div>
-
-          <div style="padding-bottom: 25px">
-            <p style="margin-top: 0; font-size: 15px; color: rgba(255, 255, 255, 0.747);">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, asperiores, ratione quaerat natus officia animi adipisci quia veniam, 
-              enim ipsa dolorem sapiente delectus fugit inventore. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias, nisi.
-            </p>
-            
-            <div>
-              <div class="input-wrap">
-                <span class="input-icon"><i data-lucide="hand-coins" style="width:16px;height:16px;color:#9ca3af;"></i></span>
-                <input id="donate" type="tel" class="form-input" placeholder="Donation Amount" required>
-              </div>
-              <!-- minimum 500 donation amount -->
-              <div id="minDonate" style="display: none; margin-left: 40px; padding: 5px; font-size: 14px; color: rgb(255, 64, 64);"> 
-                Donate minimum 500 Rs.  
-              </div>
-            </div>
-
-          </div>
-
           <!-- here use below --- id="pay-btn" -->
-          <button id="openPopup" type="submit" class="btn-submit">REGISTER NOW</button>
+          <button id="openPopup" type="submit" class="btn-submit">
+             REGISTER NOW
+           </button>
         </form>
 
       </div>
@@ -1124,12 +1307,29 @@ nav.site-nav { z-index: 100;}
         </div>
 
         <div class="billing-footer">
-            <button onclick="paymentRazorpay()" class="pay-button">Proceed to Payment</button>
+                  <button onclick="paymentRazorpay()" id="downloadBtn" class="btn pay-button">
+                    <span class="btn-text">Proceed to Payment</span>
+                    <span class="loader"></span>
+                  </button>
+
+
+            <!-- <button onclick="paymentRazorpay()" class="pay-button">Proceed to Payment</button> -->
         </div>
     </div>
 	    <!-- </div> -->
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1271,9 +1471,73 @@ nav.site-nav { z-index: 100;}
 
 
         const KEY_ID = 'rzp_test_RmjDo8lq7GTEsp';   
-        const BACKEND_URL = 'https://jaipuriya-reunion-backend.onrender.com';  
-          // const BACKEND_URL = 'http://localhost:8000'    
+        const BACKEND_URL = 'https://api.ultimatejaipurians.in';  
+        // const BACKEND_URL = 'http://localhost:8000'  
 
+
+        //-------------------------------
+        //       Vanue Cards PopUp 
+        //-------------------------------
+const overlay = document.getElementById("eventPopupOverlay");
+const closeBtn = document.getElementById("eventPopupClose");
+
+// Popup text elements
+const titleEl = document.getElementById("popupTitle");
+const dateEl = document.getElementById("popupDate");
+const timeEl = document.getElementById("popupTime");
+const popupIcon = document.getElementById("popupIcon");
+
+// All cards
+const cards = document.querySelectorAll(".eventPopupTrigger");
+
+// When clicking any card
+cards.forEach(card => {
+  card.addEventListener("click", () => {
+
+    titleEl.textContent = card.dataset.title;
+    dateEl.textContent = card.dataset.date;
+    timeEl.textContent = card.dataset.time;
+
+     popupIcon.setAttribute("data-lucide", card.dataset.icon);
+
+    // re-render lucide icons
+    lucide.createIcons();
+
+    overlay.style.display = "flex";
+  });
+});
+
+// Close popup
+closeBtn.addEventListener("click", () => {
+  overlay.style.display = "none";
+});
+
+// Click outside to close
+overlay.addEventListener("click", (e) => {
+  if (e.target === overlay) overlay.style.display = "none";
+});
+
+
+
+
+
+          // ---------------------------
+          //           Loader
+          //--------------------------
+          const button = document.getElementById("downloadBtn");
+
+           button.addEventListener("click", () => {
+             // show loader
+             button.classList.add("loading");
+
+             // simulate your PDF function
+             downloadTicketPDF().then(() => {
+               // hide loader after work done
+               button.classList.remove("loading");
+             });
+           });
+
+          
 
 
          //----------------------------------------------
@@ -1282,18 +1546,18 @@ nav.site-nav { z-index: 100;}
 
         const input= document.querySelectorAll(".someone-check");
 
-        input.forEach(el => {
+         input.forEach(el => {
           el.addEventListener('change', function () {
             
             if (this.checked) {
                 let selectedValue = this.value;
 
-                const peopleChange = document.getElementById('people-number');
+                const peopleChange = document.getElementById('attend');
 
-                if(selectedValue === 'Alone'){
-                   peopleChange.value  =  1;                
+                if(selectedValue === 'stag'){
+                   peopleChange.innerText = 1;                
                 } else {
-                   peopleChange.value = 2;
+                   peopleChange.innerText = 2;
                 } 
 
               }
@@ -1306,13 +1570,13 @@ nav.site-nav { z-index: 100;}
 
 
         //----------------------------------------------
-        //            Doantion Amount Valiation
+        //            Donation Amount Valiation
         //----------------------------------------------
 
         const donateAmount = document.getElementById('donate');
         const minimumDonate = document.getElementById('minDonate');
 
-        donateAmount.addEventListener('change', function () {
+         donateAmount.addEventListener('change', function () {
 
           let checkAmount = this.value;
           if(checkAmount < 500){
@@ -1324,6 +1588,75 @@ nav.site-nav { z-index: 100;}
           }
 
         })
+
+
+
+        //----------------------------------------------
+        //             Grand Total
+        //----------------------------------------------
+
+    
+          document.addEventListener('DOMContentLoaded', () => {
+  // Elements
+  const attendSpan = document.getElementById('attend');
+  const donateInput = document.getElementById('donate');
+  const grandTotalEl = document.getElementById('grandTotal');
+
+  // The two checkboxes (values: "stag" and "noStag")
+  const stagCheckbox = document.querySelector('.someone-check[value="stag"]');
+  const plusOneCheckbox = document.querySelector('.someone-check[value="noStag"]');
+
+  // Basic existence check
+  if (!attendSpan || !donateInput || !grandTotalEl || !stagCheckbox || !plusOneCheckbox) {
+    console.error('Required elements not found: attend, donate, grandTotal, or checkboxes.');
+    return;
+  }
+
+  // compute number of attendees
+  function getAttendeesCount() {
+    const stag = stagCheckbox.checked;
+    const plusOne = plusOneCheckbox.checked;
+
+    // If +1 is checked but stag is not, assume primary also coming -> 2
+    if (plusOne && !stag) return 2;
+    return (stag ? 1 : 0) + (plusOne ? 1 : 0);
+  }
+
+  // price rules
+  function getPassPrice(count) {
+    if (count === 1) return 5000;
+    if (count === 2) return 7000;
+    return 0;
+  }
+
+  // calculate & update UI
+  function calculateAndRender() {
+    const attendees = getAttendeesCount();
+    attendSpan.textContent = attendees;
+
+    const donateAmt = Number(String(donateInput.value).replace(/[^0-9.-]/g, '')) || 0;
+    const passValue = getPassPrice(attendees);
+
+    const grand = passValue + donateAmt;
+    grandTotalEl.textContent = grand.toLocaleString(); // formatted number
+  }
+
+  // wire events: changes to checkboxes or donation input update totals
+  stagCheckbox.addEventListener('change', calculateAndRender);
+  plusOneCheckbox.addEventListener('change', calculateAndRender);
+  donateInput.addEventListener('input', calculateAndRender);
+
+  // initial render
+  calculateAndRender();
+});
+
+
+       
+
+
+
+
+
 
 
 
@@ -1344,28 +1677,40 @@ nav.site-nav { z-index: 100;}
       const address = document.getElementById("address").value.trim();
       const city = document.getElementById("city").value.trim();
       const adhaar = document.getElementById("adhaar").value.trim();
-      const noPeople = document.getElementById("people-number").value.trim();
+      const noPeople = document.getElementById("attend").textContent;
       const donateAmt = document.getElementById('donate').value.trim();
 
       const someone = document.querySelector(".someone-check:checked")?.value || "";
       const support = document.querySelector(".support-check:checked")?.value || "";
 
+      console.log(noPeople)
 
-      if( !name || !phone || !email || !noPeople || !donateAmt || !address || !city || !adhaar || !someone || !support){
+
+      if( !name || !phone || !email || !donateAmt || !address || !city || !adhaar || !someone || !support){
         alert("Please fill the form")
         e.preventDefault();
       } else {
 
         document.getElementById('popup').style.display = 'flex';
 
-        const noPeople = Number(document.getElementById("people-number").value.trim());
+        // const noPeople = Number(document.getElementById("attend").value);
         const donateAmt = Number(document.getElementById('donate').value.trim());
          
+        let passValue;
+        if(noPeople == 1){
+          passValue = 5000;
+        } else if(noPeople == 2){
+          passValue = 7000;
+        } else {
+          passValue = 0
+        }
 
-        const passValue = noPeople * 5000;
-        const   totalValue = passValue + donateAmt;
+
+        const totalValue = passValue + donateAmt;
         const taxValue = 18*totalValue/100;
         const payPrice = totalValue + taxValue;
+
+        console.log(passValue)
 
         document.getElementById('totalPass').innerText = `₹  ${passValue}`;
         document.getElementById('totalDonate').innerText = `₹  ${donateAmt}`;
@@ -1380,6 +1725,8 @@ nav.site-nav { z-index: 100;}
       document.getElementById('closePop').addEventListener('click', () => {
              document.getElementById('popup').style.display = 'none';
       })
+
+
 
 
 
@@ -1400,20 +1747,20 @@ nav.site-nav { z-index: 100;}
       const city = document.getElementById("city").value.trim();
       const adhaar = document.getElementById("adhaar").value.trim();
       
-      const noPeople = Number(document.getElementById("people-number").value.trim());
+      const noPeople = Number(document.getElementById("attend").textContent);
       const donateAmt = Number(document.getElementById('donate').value.trim());
 
       const someone = document.querySelector(".someone-check:checked")?.value || "";
       const support = document.querySelector(".support-check:checked")?.value || "";
          
 
-        const partyValue = noPeople * 5000;
+        const partyValue = 5000;
         const passDonateValue = partyValue + donateAmt;
         const payValue = 18*passDonateValue/100;
         const totalPayPrice = passDonateValue + payValue;
 
 
-      const formData = { name, phone, email, address, city, adhaar, noPeople, donateAmt, someone, support };
+      const formData = { name, phone, email, address, city, adhaar, noPeople, donateAmt, someone, support, donateAmt, totalPayPrice };
       console.log("FORM DATA:", formData);
 
           
@@ -1547,6 +1894,10 @@ nav.site-nav { z-index: 100;}
 
 
 
+
+
+
+
         // Allow only one checkbox from a group
     function allowOnlyOne(className) {
       const boxes = document.querySelectorAll("." + className);
@@ -1560,8 +1911,8 @@ nav.site-nav { z-index: 100;}
         });
       });
     }
-    allowOnlyOne("Attend-check");
-    allowOnlyOne("someone-check");
+
+    // allowOnlyOne("someone-check");
     allowOnlyOne("support-check");
     
     

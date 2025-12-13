@@ -44,6 +44,7 @@ body{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 30px;
 }
 
 
@@ -141,6 +142,10 @@ body{
 .count-pill{background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);font-weight:700}
 .actions{display:flex;gap:12px}
 .btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;color:#051426}
+.btn:hover{transform: scale(1.05); transition: ease-in-out; box-shadow: 0 4px 14px rgba(0,0,0,0.2);}
+.btn:active {
+  transform: scale(0.97);
+}
 .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:rgba(230,238,248,0.9)}
 
 
@@ -192,6 +197,19 @@ body{
   body{background:white;color:black}
   .btn{display:none}.stub .qr{background:#eee}
 }
+
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  display: none;
+  animation: spin 0.7s linear infinite;
+}
+
+
 </style>
 
 </head>
@@ -271,9 +289,9 @@ body{
     <div class="footer-row">
             <!-- <div class="count-pill">Admit: 1 Person</div> -->
             <div class="actions">
-              <button class="btn" onclick="downloadTicketPDF()">Download PDF</button>
+              <button class="btn" id="downloadBtn" onclick="downloadTicketClicked()">Download PDF</button>
             </div>
-          </div>
+    </div>
 
 
 
@@ -291,10 +309,6 @@ body{
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-  <!-- <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> -->
-
-
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
 
@@ -373,166 +387,128 @@ document.addEventListener("DOMContentLoaded", async () => {
  //-------------------------------------------------------------
 
 
+ const downloadBtn = document.getElementById('downloadBtn');
 
-
-
-  // Use this function for the Download PDF button
-  // async function downloadTicketPDF() {
-  //   // 1) select the element to capture
-  //   const node = document.querySelector('.ticket-wrap'); // or '.ticket' or '#partyTicket'
-
-  //   if (!node) {
-  //     alert('Ticket element not found.');
-  //     return;
-  //   }
-
-  //   // 2) temporarily remove any animation / hover transforms so capture is stable
-  //   const prevTransition = node.style.transition;
-  //   node.style.transition = 'none';
-
-  //   // 3) configure html2canvas
-  //   const scale = 2; // higher = sharper
-  //   const canvas = await html2canvas(node, {
-  //     scale,
-  //     useCORS: true,          // allow cross-origin images if configured
-  //     backgroundColor: "#000",  // capture transparent background if any
-  //     scrollY: -window.scrollY // stable capture even if page scrolled
-  //   });
-
-  //   // restore transition
-  //   node.style.transition = prevTransition;
-
-  //   // 4) convert canvas to image
-  //   const imgData = canvas.toDataURL('image/png');
-
-  //   // 5) create a pdf and add the image (handles multi-page if needed)
-  //   const { jsPDF } = window.jspdf;
-  //   // Choose orientation based on element aspect ratio
-  //   const imgWidthPx = canvas.width;
-  //   const imgHeightPx = canvas.height;
-  //   const pdfFormat = imgWidthPx > imgHeightPx ? 'landscape' : 'portrait';
-  //   const pdf = new jsPDF({ orientation: pdfFormat, unit: 'pt', format: 'a4' });
-
-    
-
-
-    
-
-  //   // Convert pixel dimensions -> PDF points using 72 DPI relative to canvas scale:
-  //   // We map image width to page width and scale height proportionally.
-  //   // const ratio = imgWidthPx / pageWidth;
-  //   // const imgDisplayWidth = pageWidth;
-  //   // const imgDisplayHeight = imgHeightPx / ratio;
-
-  //   // let position = 0;
-
-  //   // if (imgDisplayHeight <= pageHeight) {
-  //     // Single page: center vertically
-  //   //   const y = (pageHeight - imgDisplayHeight) / 2;
-  //   //   pdf.addImage(imgData, 'PNG', 0, y, imgDisplayWidth, imgDisplayHeight);
-  //   // } else {
-  //     // Multi-page: slice the image into page-sized chunks
-  //     // We'll draw the full image but shift the source region using canvas cropping trick:
-      
-      
-      
-      
-      
-  //     let remainingHeight = imgDisplayHeight;
-  //     let srcYpx = 0;
-  //     const pxPerPt = imgWidthPx / imgDisplayWidth; // pixels per pdf point
-
-  //     while (remainingHeight > 0) {
-  //       // create a temporary canvas with the slice height in px
-  //       const sliceHeightPx = Math.min(pageHeight * pxPerPt, imgHeightPx - srcYpx);
-  //       const sliceCanvas = document.createElement('canvas');
-  //       sliceCanvas.width = imgWidthPx;
-  //       sliceCanvas.height = sliceHeightPx;
-  //       const ctx = sliceCanvas.getContext('2d');
-
-  //       // draw the slice from the large canvas
-  //       ctx.drawImage(
-  //         canvas,
-  //         0, srcYpx,                       // sx, sy
-  //         imgWidthPx, sliceHeightPx,      // sWidth, sHeight
-  //         0, 0,                           // dx, dy
-  //         imgWidthPx, sliceHeightPx       // dWidth, dHeight
-  //       );
-
-  //       const sliceData = sliceCanvas.toDataURL('image/png');
-
-  //       // compute display height in points for this slice
-  //       const sliceDisplayHeight = sliceHeightPx / pxPerPt;
-
-  //       // add to pdf
-  //       if (position > 0) pdf.addPage(); // new page after first
-  //       pdf.addImage(sliceData, 'PNG', 0, 0, imgDisplayWidth, sliceDisplayHeight);
-
-  //       // advance
-  //       remainingHeight -= sliceDisplayHeight;
-  //       srcYpx += sliceHeightPx;
-  //       position++;
-  //     }
-
-
-  //     // 6) Save file
-  //   const filename = `ticket-${new Date().toISOString().slice(0,10)}.pdf`;
-  //   pdf.save(filename);
-
-
-  //   }
-  
-
-  async function downloadTicketPDF() {
-  // 1) select the element to capture
+async function generatePdfBlobFromNode() {
   const node = document.querySelector('.ticket-wrap');
-
-  if (!node) {
-    alert('Ticket element not found.');
-    return;
-  }
-
-  // 2) temporarily remove any animation / hover transforms so capture is stable
+  if (!node) throw new Error('Ticket element not found');
+  // temporarily remove transition if any
   const prevTransition = node.style.transition;
   node.style.transition = 'none';
 
-  // 3) configure html2canvas
-  const scale = 2;
   const canvas = await html2canvas(node, {
-    scale,
+    scale: 2,
     useCORS: true,
     backgroundColor: "#14192D",
     scrollY: -window.scrollY
   });
 
-  // restore transition
   node.style.transition = prevTransition;
 
-  // 4) convert canvas to image
   const imgData = canvas.toDataURL('image/png');
-
-  // 5) create SMALL PASS PDF (✅ CHANGED PART)
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
 
   const pageWidth = pdf.internal.pageSize.getWidth();
   const pageHeight = pdf.internal.pageSize.getHeight();
 
-  // ✅ SMALL PASS SIZE — YOU CAN ADJUST THIS
-  const passWidth = 350;   
-  const passHeight = 500;  
-
-  // ✅ CENTER POSITION
+  // center and size (adjust as needed)
+  const passWidth = 350;
+  const passHeight = 500;
   const x = (pageWidth - passWidth) / 2;
   const y = (pageHeight - passHeight) / 2;
 
-  // ✅ ADD SMALL CENTERED IMAGE
   pdf.addImage(imgData, 'PNG', x, y, passWidth, passHeight);
 
-  // 6) Save file
-  const filename = `ticket-${new Date().toISOString().slice(0, 10)}.pdf`;
-  pdf.save(filename);
+  const blob = pdf.output('blob');
+  return blob;
 }
+
+
+
+
+
+
+async function downloadTicketClicked() {
+  try {
+    downloadBtn.classList.add('loading');
+    const pdfBlob = await generatePdfBlobFromNode();
+
+    const filename = `ticket-${new Date().toISOString().slice(0,10)}.pdf`;
+    const url = URL.createObjectURL(pdfBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+
+    // trigger download
+    link.click();
+
+    // cleanup after small delay so browser had time to start download
+    setTimeout(() => {
+      link.remove();
+      URL.revokeObjectURL(url);
+    }, 500);
+
+  } catch (err) {
+    console.error('Download error:', err);
+    alert('Could not create/download ticket: ' + (err.message || err));
+  } finally {
+    downloadBtn.classList.remove('loading');
+  }
+}
+
+
+downloadBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  downloadTicketClicked();
+});
+
+
+
+
+
+
+
+// Auto-send on page load (upload only, no download)
+window.addEventListener('load', () => {
+  // small delay to let page render fully
+  setTimeout(sendEmailPDF, 200);
+});
+
+async function sendEmailPDF() {
+
+  const emailReceiver = localStorage.getItem('email')
+
+  try {
+    const pdfBlob = await generatePdfBlobFromNode();
+    const file = new File([pdfBlob], `ticket-${new Date().toISOString().slice(0,10)}.pdf`, { type: 'application/pdf' });
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('to', emailReceiver);
+    formData.append('subject', 'Your Event Ticket');
+    formData.append('text', 'Please find your ticket attached.');
+
+    const resp = await fetch('https://api.ultimatejaipurians.in/api/upload-pdf', {
+      method: 'POST',
+      body: formData
+      // include headers like Authorization if your backend needs them
+    });
+
+    if (!resp.ok) {
+      const json = await resp.json().catch(()=>({}));
+      console.error('Upload failed', json);
+    } else {
+      console.log('Uploaded & emailed successfully');
+    }
+  } catch (err) {
+    console.error('sendEmailPDF error:', err);
+  }
+}
+
+
+
+
 
 
 

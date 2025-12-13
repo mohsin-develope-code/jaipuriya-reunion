@@ -194,6 +194,46 @@
       .logo { width:42px;height:42px; }
     }
 
+
+  .btn {
+  position: relative;
+  padding: 12px 22px;
+  border: none;
+  background: #4A6CF7;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  display: none;
+  animation: spin 0.7s linear infinite;
+}
+
+.btn.loading .btn-text {
+  opacity: 0.5;
+}
+
+.btn.loading .loader {
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+
   </style>
 
 </head>
@@ -229,7 +269,11 @@
        
 
         <div style="padding: 20px 0;">
-          <button id="login" class="btn" type="submit">Sign in</button>
+                  <button id="login" class="btn pay-button">
+                    <span class="btn-text">Login</span>
+                    <span class="loader"></span>
+                  </button>
+          <!-- <button id="login" class="btn" type="submit">Sign in</button> -->
         </div>
 
 
@@ -242,15 +286,21 @@
 
 
 
+
+
+      const button = document.getElementById("login");
+
       document.getElementById('login').addEventListener('click', async (e) => {
       
       e.preventDefault();
+
+      button.classList.add("loading");
 
       const email = document.getElementById('email').value.trim()
       const phone = document.getElementById('phone').value.trim()
 
       
-      const response = await fetch('https://jaipuriya-reunion-backend.onrender.com/user/pass',
+      const response = await fetch('https://api.ultimatejaipurians.in/user/pass',
                                    {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' }, 
