@@ -519,8 +519,7 @@ async function sendEmailPDF() {
     formData.append('subject', 'Your Event Ticket');
     formData.append('text', 'Please find your ticket attached.');
 
-    //  const resp = await fetch('https://api.ultimatejaipurians.in/api/upload-pdf', {
-    const resp = await fetch('http://localhost:8000/api/upload-pdf', {
+    const resp = await fetch('https://api.ultimatejaipurians.in/api/upload-pdf', {
       method: 'POST',
       body: formData
      
