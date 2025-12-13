@@ -506,12 +506,28 @@ nav.site-nav { z-index: 100;}
       font-weight:600;
     }
 
-    .input-wrap { position:relative; }
+    .input-wrap { 
+      position:relative;
+     }
+
+     .input-wrap textarea {
+         font-family: 'Poppins', sans-serif;
+         font-size: 16px;
+       }
 
     .input-icon {
       position:absolute;
       left:10px;
-      top:50%;
+      top:60%;
+      transform: translateY(-50%);
+      pointer-events:none;
+      opacity:0.7;
+    }
+
+    .input-icon-txtarea{
+      position:absolute;
+      left:10px;
+      top:45%;
       transform: translateY(-50%);
       pointer-events:none;
       opacity:0.7;
@@ -1275,7 +1291,7 @@ nav.site-nav { z-index: 100;}
                     </svg>
                     Pass Fee
                 </div>
-                <div id="totalPass" class="item-amount">₹500.00</div>
+                <div id="totalPass" class="item-amount">NA</div>
             </div>
 
             <div class="billing-item">
@@ -1285,7 +1301,7 @@ nav.site-nav { z-index: 100;}
                     </svg>
                     Donation
                 </div>
-                <div id="totalDonate" class="item-amount">₹100.00</div>
+                <div id="totalDonate" class="item-amount">NA</div>
             </div>
 
             <div class="billing-item">
@@ -1295,14 +1311,14 @@ nav.site-nav { z-index: 100;}
                     </svg>
                     GST (18%)
                 </div>
-                <div id="totalTax" class="item-amount">₹108.00</div>
+                <div id="totalTax" class="item-amount">NA</div>
             </div>
 
             <div class="billing-divider"></div>
 
             <div class="billing-total">
                 <div class="total-label">Total Amount</div>
-                <div id="totalPay" class="total-amount">₹708.00</div>
+                <div id="totalPay" class="total-amount">NA</div>
             </div>
         </div>
 
@@ -1336,7 +1352,7 @@ nav.site-nav { z-index: 100;}
 
 <div class="contact-section">
 
-  <div class="contact-left">
+  <!-- <div class="contact-left">
     
     <div>
       <h1>Contact US</h1>
@@ -1353,12 +1369,32 @@ nav.site-nav { z-index: 100;}
 		</div>
    </div>
 
-  </div>
+  </div> -->
 
 
   <div class="contact-right">
 
     <div class="register-wrap glass-panel">
+
+      <div class="contact-left">
+    
+    <div>
+      <h1>Contact US</h1>
+      <h3>Email Us: <span style="color: rgba(255, 255, 255, 0.747);"> ultimatejaipurians@gmail.com</span></h3>
+    
+
+    <div>
+			<h3 style="color: rgba(255, 255, 255, 0.747);">
+				+91-961-6242222
+			</h3>
+			<h3 style="color: rgba(255, 255, 255, 0.747);">
+				+91-979-2722136
+			</h3>
+		</div>
+   </div>
+
+  </div>
+
 
       <form id="contactForm">
          
@@ -1388,7 +1424,7 @@ nav.site-nav { z-index: 100;}
 
            <div>
             <div class="input-wrap">
-              <!-- <textarea id="address" class="form-input" placeholder="Write your message"></textarea> -->
+                <span class="input-icon-txtarea"><i data-lucide="message-square-text" style="width:16px;height:16px;color:#9ca3af;"></i></span>
                 <textarea id="contact" class="form-input" placeholder="Write your message"></textarea>
             </div>
            </div>
@@ -1398,18 +1434,18 @@ nav.site-nav { z-index: 100;}
 
 
     <div style="display: flex; align-items: center; justify-content: center; padding-top: 20px;">
+      <a href="https://api.whatsapp.com/send?phone=6388505758">
       <Button style="
       padding:8px 16px;
       border-radius:12px;
       border:none;
-      font-weight:800;
+      font-weight:600;
       font-size:16px;
       cursor:pointer;
       background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
       color:#000;
-      box-shadow: 0 10px 30px rgba(0,243,255,0.12);
-        ">
-        Submit</Button>
+      box-shadow: 0 10px 30px rgba(0,243,255,0.12);">
+        Send Message</Button></a>
     </div>
 
   </div>
@@ -1471,8 +1507,8 @@ nav.site-nav { z-index: 100;}
 
 
         const KEY_ID = 'rzp_test_RmjDo8lq7GTEsp';   
-        const BACKEND_URL = 'https://api.ultimatejaipurians.in';  
-        //const BACKEND_URL = 'http://localhost:8000'  
+        //const BACKEND_URL = 'https://api.ultimatejaipurians.in';  
+        const BACKEND_URL = 'http://localhost:8000'  
 
 
         //-------------------------------
@@ -1531,10 +1567,10 @@ overlay.addEventListener("click", (e) => {
              button.classList.add("loading");
 
              // simulate your PDF function
-             downloadTicketPDF().then(() => {
-               // hide loader after work done
-               button.classList.remove("loading");
-             });
+            //  downloadTicketPDF().then(() => {
+            //    // hide loader after work done
+            //    button.classList.remove("loading");
+            //  });
            });
 
           
@@ -1686,7 +1722,7 @@ overlay.addEventListener("click", (e) => {
       console.log(noPeople)
 
 
-      if( !name || !phone || !email || !donateAmt || !address || !city || !adhaar || !someone || !support){
+      if( !name || !phone || !email || !address || !city || !adhaar || !someone || !support){
         alert("Please fill the form")
         e.preventDefault();
       } else {
@@ -1788,7 +1824,6 @@ overlay.addEventListener("click", (e) => {
                                                 amount: totalPayPrice*100,
                                                 currency: 'INR',
                                                 receipt: `rcpt_${Date.now()}`,
-                                                //notes: formData // << here we send the registration info to the server
                                                 }),                     
 
                                               });
@@ -1826,6 +1861,7 @@ overlay.addEventListener("click", (e) => {
 
                 // 4. Open Checkout
                 const rzp1 = new Razorpay(options);
+                button.classList.remove("loading");
                 
                 rzp1.on('payment.failed', function (response){
                     alert("Payment Failed: " + response.error.description);

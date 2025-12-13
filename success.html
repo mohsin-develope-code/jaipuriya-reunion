@@ -372,7 +372,10 @@ document.addEventListener("DOMContentLoaded", function () {
 )     
 
 
-
+//when page is remove or cancel from tab then clear all local storage data.
+// window.addEventListener('beforeunload', (event) => {
+//   localStorage.clear();
+// });
 
 
 
@@ -486,11 +489,6 @@ async function downloadTicketClicked() {
 }
 
 
-// downloadBtn.addEventListener('click', (e) => {
-//   console.log("Before Function Button Clicked....")
-//   e.preventDefault();
-//   downloadTicketClicked();
-// });
 
 
 
@@ -505,6 +503,7 @@ if(!localStorage.getItem('fromLogin')){
       setTimeout(sendEmailPDF, 200);
       }); 
   }
+ 
 
 
 async function sendEmailPDF() {
@@ -520,7 +519,8 @@ async function sendEmailPDF() {
     formData.append('subject', 'Your Event Ticket');
     formData.append('text', 'Please find your ticket attached.');
 
-     const resp = await fetch('https://api.ultimatejaipurians.in/api/upload-pdf', {
+    //  const resp = await fetch('https://api.ultimatejaipurians.in/api/upload-pdf', {
+    const resp = await fetch('http://localhost:8000/api/upload-pdf', {
       method: 'POST',
       body: formData
      

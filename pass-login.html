@@ -300,7 +300,8 @@
       const phone = document.getElementById('phone').value.trim()
 
       
-      const response = await fetch('https://api.ultimatejaipurians.in/user/pass',
+      // const response = await fetch('https://api.ultimatejaipurians.in/user/pass',
+      const response = await fetch('http://localhost:8000/user/pass',
                                    {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/json' }, 
@@ -315,7 +316,7 @@
       console.log(formData)
 
       if(status === true)
-      {              localStorage.setItem('no-people', formData.how_many_people)
+      {             localStorage.setItem('no-people', formData.how_many_people)
                     localStorage.setItem('city', formData.city)
                     localStorage.setItem('phone', formData.user_number)
                     localStorage.setItem('email', formData.user_email)
