@@ -12,6 +12,8 @@
 <style>
 :root{
   --bg:#071022;
+  --accent-cyan: #00f3ff;
+  --accent-blue: #3b82f6;
   --card:#0f1724;
   --accent1:#00d4ff; /* cyan */
   --accent2:#ff4db8; /* pink */
@@ -151,7 +153,25 @@ body{
 
 .details-grid h1 {
   text-align: end;
+}
 
+
+.back-btn{
+  background:linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+  border:none;
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  color:#051426  
+}
+
+.back-btn:hover{
+  transform: scale(1.05); transition: ease-in-out; box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+
+.btn:active {
+  transform: scale(0.97);
 }
 
 
@@ -288,9 +308,13 @@ body{
 
     <div class="footer-row">
             <!-- <div class="count-pill">Admit: 1 Person</div> -->
-            <div class="actions">
-              <button class="btn" id="downloadBtn" onclick="downloadTicketClicked()">Download PDF</button>
+             <div class="actions">
+              <a href="index.html"><button class="back-btn">Back To Home</button></a>
             </div>
+            <div class="actions">
+              <button type="button" class="btn" id="downloadBtn" onclick="downloadTicketClicked()">Download PDF</button>
+            </div>
+
     </div>
 
 
@@ -390,6 +414,7 @@ document.addEventListener("DOMContentLoaded", async () => {
  const downloadBtn = document.getElementById('downloadBtn');
 
 async function generatePdfBlobFromNode() {
+  console.log("Function Button Clicked....")
   const node = document.querySelector('.ticket-wrap');
   if (!node) throw new Error('Ticket element not found');
   // temporarily remove transition if any
@@ -428,8 +453,10 @@ async function generatePdfBlobFromNode() {
 
 
 
-
 async function downloadTicketClicked() {
+
+  console.log('download function reached out...')
+
   try {
     downloadBtn.classList.add('loading');
     const pdfBlob = await generatePdfBlobFromNode();
@@ -459,10 +486,11 @@ async function downloadTicketClicked() {
 }
 
 
-downloadBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  downloadTicketClicked();
-});
+// downloadBtn.addEventListener('click', (e) => {
+//   console.log("Before Function Button Clicked....")
+//   e.preventDefault();
+//   downloadTicketClicked();
+// });
 
 
 
@@ -471,10 +499,13 @@ downloadBtn.addEventListener('click', (e) => {
 
 
 // Auto-send on page load (upload only, no download)
-window.addEventListener('load', () => {
-  // small delay to let page render fully
-  setTimeout(sendEmailPDF, 200);
-});
+
+if(!localStorage.getItem('fromLogin')){
+  window.addEventListener('load', () => {
+      setTimeout(sendEmailPDF, 200);
+      }); 
+  }
+
 
 async function sendEmailPDF() {
 
