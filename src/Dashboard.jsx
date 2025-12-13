@@ -47,7 +47,7 @@ const Dashboard = () => {
 
     async function dataGet(){
     try {
-      const response = await fetch('https://jaipuriya-reunion-backend.onrender.com/admin/admin/all-user',{
+      const response = await fetch('https://api.ultimatejaipurians.in/admin/admin/all-user',{
                                     method: 'GET',
                                     credentials: "include",
                                     headers: {
@@ -80,7 +80,7 @@ const Dashboard = () => {
     async function logout() {
       
     
-      const res = await fetch('https://jaipuriya-reunion-backend.onrender.com/admin/logout',
+      const res = await fetch('https://api.ultimatejaipurians.in/admin/logout',
                             {
                               method: 'GET',
                               credentials: "include",
@@ -193,7 +193,7 @@ const Dashboard = () => {
 
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className=" flex-1 flex flex-col overflow-hidden">
 
 
         {/* Header */}
@@ -220,7 +220,7 @@ const Dashboard = () => {
 
 
 
-        <div className='w-full h-full '>
+        <div className='min-h-fit w-full'>
           
           {
             userData?.map((item) => 
@@ -256,7 +256,7 @@ const Dashboard = () => {
 
             </div>
 
-            <div className=' flex items-center justify-between px-5 pt-4'>
+            <div className='flex items-center justify-between px-5 pt-4'>
               <h3 className='font-bold'>Total Amount: <span>{item.totalAmt}</span></h3>
               <h3 className='font-bold'>Donate Amount: <span>{item.donateAmt}</span></h3>
             </div>
