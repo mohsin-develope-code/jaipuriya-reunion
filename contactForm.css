@@ -53,21 +53,19 @@ input, textarea {
 }
 
 .contact-left h1{
-    font-size: 3rem;
+    padding: 0;
+    font-size: 2.5rem;
     text-align: start;
 }
 
 .contact-left h3{
-    font-weight: 500;
+    font-weight: 400;
+    font-size: 1.2rem;
 }
 
-.contact-left{
-    width: 40%;
-    height: 100%;
-}
 
 .contact-right{
-    width:50%;
+    width:60%;
 }
 
 
@@ -88,7 +86,7 @@ input, textarea {
 }
 
 .contact-left h1{
-    font-size: 3rem;
+    font-size: 2rem;
     text-align: start;
 }
 
@@ -96,9 +94,9 @@ input, textarea {
     font-weight: 500;
 }
 
-.contact-left{
+/* .contact-left{
     width: 100%;
-}
+} */
 
 .contact-right{
     width:100%;
