@@ -1608,11 +1608,15 @@ cards.forEach(card => {
 // Close popup
 closeBtn.addEventListener("click", () => {
   overlay.style.display = "none";
+  openMap.style.display = 'none'
 });
 
 // Click outside to close
 overlay.addEventListener("click", (e) => {
-  if (e.target === overlay) overlay.style.display = "none";
+  if (e.target === overlay) {
+	  overlay.style.display = "none";
+	   openMap.style.display = 'none'
+};
 });
 
 
@@ -2087,6 +2091,7 @@ message: ${message}
 
 </body>
 </html>
+
 
 
 
