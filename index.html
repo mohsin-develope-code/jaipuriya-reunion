@@ -1004,7 +1004,7 @@ nav.site-nav { z-index: 100;}
     <div class="h3" id="popupTitle"></div>
     <div class="muted" id="popupDate"></div>
     <div class="sub-muted" id="popupTime"></div>
-
+         <a style="display: none; justify-content: center;" id="openMap">Open To Map</a>
     <button id="eventPopupClose">Close</button>
 
   </div>
@@ -1580,6 +1580,7 @@ const popupIcon = document.getElementById("popupIcon");
 
 // All cards
 const cards = document.querySelectorAll(".eventPopupTrigger");
+const openMap = document.getElementById('openMap');
 
 // When clicking any card
 cards.forEach(card => {
@@ -1589,7 +1590,13 @@ cards.forEach(card => {
     dateEl.textContent = card.dataset.date;
     timeEl.textContent = card.dataset.time;
 
+    const title = titleEl.textContent;
+
      popupIcon.setAttribute("data-lucide", card.dataset.icon);
+     if(title === 'Where?'){
+       openMap.style.display = 'flex'
+       openMap.setAttribute("href", 'https://maps.app.goo.gl/DSnifjemDkRE39xM9?g_st=aw')
+     }
 
     // re-render lucide icons
     lucide.createIcons();
@@ -2080,6 +2087,7 @@ message: ${message}
 
 </body>
 </html>
+
 
 
 
