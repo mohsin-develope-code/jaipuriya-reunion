@@ -1710,7 +1710,6 @@ overlay.addEventListener("click", (e) => {
         const taxValue = 18*totalValue/100;
         const payPrice = totalValue + taxValue;
 
-        console.log(passValue)
 
         document.getElementById('totalPass').innerText = `₹  ${passValue}`;
         document.getElementById('totalDonate').innerText = `₹  ${donateAmt}`;
@@ -1754,8 +1753,16 @@ overlay.addEventListener("click", (e) => {
       const support = document.querySelector(".support-check:checked")?.value || "";
          
 
-        const partyValue = 5000;
-        const passDonateValue = partyValue + donateAmt;
+      let passValue;
+        if(noPeople == 1){
+          passValue = 5000;
+        } else if(noPeople == 2){
+          passValue = 7000;
+        } else {
+          passValue = 0
+        }
+
+        const passDonateValue = passValue + donateAmt;
         const payValue = 18*passDonateValue/100;
         const totalPayPrice = passDonateValue + payValue;
 
