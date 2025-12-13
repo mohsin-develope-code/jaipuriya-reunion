@@ -1402,7 +1402,7 @@ nav.site-nav { z-index: 100;}
             
             <div class="input-wrap">
               <span class="input-icon"><i data-lucide="user" style="width:16px;height:16px;color:#9ca3af;"></i></span>
-              <input id="name" type="text" class="form-input" placeholder="Full Name" required>
+              <input id="contact-name" type="text" class="form-input" placeholder="Full Name" required>
             </div>
           </div>
 
@@ -1410,14 +1410,14 @@ nav.site-nav { z-index: 100;}
           <div>
             <div class="input-wrap">
               <span class="input-icon"><i data-lucide="phone" style="width:16px;height:16px;color:#9ca3af;"></i></span>
-              <input id="number" type="tel" class="form-input" placeholder="Phone Number" required>
+              <input id="contact-phone" type="tel" class="form-input" placeholder="Phone Number" required>
             </div>
           </div>
 
           <div>
             <div class="input-wrap">
               <span class="input-icon"><i data-lucide="mail" style="width:16px;height:16px;color:#9ca3af;"></i></span>
-              <input id="email" type="tel" class="form-input" placeholder="Email" required>
+              <input id="contact-email" type="text" class="form-input" placeholder="Email" required>
             </div>
           </div>
 
@@ -1425,7 +1425,7 @@ nav.site-nav { z-index: 100;}
            <div>
             <div class="input-wrap">
                 <span class="input-icon-txtarea"><i data-lucide="message-square-text" style="width:16px;height:16px;color:#9ca3af;"></i></span>
-                <textarea id="contact" class="form-input" placeholder="Write your message"></textarea>
+                <textarea id="contact-text" class="form-input" placeholder="Write your message"></textarea>
             </div>
            </div>
 
@@ -1434,8 +1434,7 @@ nav.site-nav { z-index: 100;}
 
 
     <div style="display: flex; align-items: center; justify-content: center; padding-top: 20px;">
-      <a href="https://api.whatsapp.com/send?phone=6388505758">
-      <Button style="
+      <Button id="contact-btn" style="
       padding:8px 16px;
       border-radius:12px;
       border:none;
@@ -1445,7 +1444,7 @@ nav.site-nav { z-index: 100;}
       background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
       color:#000;
       box-shadow: 0 10px 30px rgba(0,243,255,0.12);">
-        Send Message</Button></a>
+        Send Message</Button>
     </div>
 
   </div>
@@ -1990,6 +1989,32 @@ overlay.addEventListener("click", (e) => {
     const form = document.getElementById('contactForm');
     const toast = document.getElementById('toast');
   
+
+
+
+    //COntact form whatsapp send
+
+document.getElementById('contact-btn').addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const name = document.getElementById('contact-name').value;
+  const phone = document.getElementById('contact-phone').value;
+  const email = document.getElementById('contact-email').value;
+  const message = document.getElementById('contact-text').value;
+
+  const whatsappNumber = '916388505758'; // with country code
+
+  const text = `
+Name: ${name}
+Phone: ${phone}
+email: ${email}
+message: ${message}
+  `;
+
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+
+  window.open(url, '_blank');
+});
 
 
 
