@@ -1672,10 +1672,11 @@ cards.forEach(card => {
     titleEl.textContent = card.dataset.title;
     dateEl.textContent = card.dataset.date;
     timeEl.textContent = card.dataset.time;
+    popupIcon.innerHTML = `<i id="popupIcon" data-lucide="${card.dataset.icon}" style="width:24px;height:24px;"></i>`
+
+
 
     const title = titleEl.textContent;
-
-     popupIcon.setAttribute("data-lucide", card.dataset.icon);
 
      if(title === 'Where?'){
        openMap.style.display = 'flex'
@@ -1689,10 +1690,14 @@ cards.forEach(card => {
   });
 });
 
+
+const popIcon = document.getElementById('popupIcon');
+
 // Close popup
 closeBtn.addEventListener("click", () => {
   overlay.style.display = "none";
-  openMap.style.display = 'none'
+  openMap.style.display = 'none';
+  popIcon.setAttribute("data-lucide", '');
 });
 
 // Click outside to close
