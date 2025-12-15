@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="production-carousel-claude.css">
     <link rel="stylesheet" href="popup.css">
     <link rel="stylesheet" href="contactForm.css">
+    <link rel="stylesheet" href="photoPopup.css">
 
 
 
@@ -137,11 +138,7 @@
   50%    { transform: translate(30px,50px) scale(1.03); }
 }
 
-/* ensure page content appears above the gradient */
-/* body > *:not(.gradient-bg) {
-  position: relative;
-  z-index: 1;
-} */
+
 
 body > *:not(.gradient-bg):not(.pop-register) {
   position: relative;
@@ -430,6 +427,7 @@ nav.site-nav { z-index: 100;}
        ------------------------- */
     .section {
       padding: 60px 16px;
+      z-index: -1;
     }
 
     .section .title {
@@ -492,7 +490,7 @@ nav.site-nav { z-index: 100;}
       border-radius:50%;
       background: rgba(0,243,255,0.06);
       filter: blur(30px);
-      z-index:-1;
+      z-index:1;
     }
 
     form#contactForm { display:flex; flex-direction:column; gap:14px; }
@@ -503,7 +501,7 @@ nav.site-nav { z-index: 100;}
       font-size:16px;
       /* color:#cbd5e1; */
       color: #f9fafc;
-      font-weight:600;
+      font-weight:500;
     }
 
     .input-wrap { 
@@ -820,8 +818,32 @@ nav.site-nav { z-index: 100;}
 }
 
 
+.music{
+  position: absolute;
+  background-color: #222;
+  padding: 9px 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 15%;
+  right: 2%;
+}
 
-    </style>
+.stop-music{
+  display: none;           /* IMPORTANT */
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  background-color: white;
+  z-index: 10;
+  transform: rotate(45deg);
+}
+
+
+
+
+  </style>
 
 
 
@@ -832,6 +854,7 @@ nav.site-nav { z-index: 100;}
 
 
 <body>
+
 
   
 
@@ -865,6 +888,8 @@ nav.site-nav { z-index: 100;}
 
 
 <section id="hero" class="hero">
+
+
   <!-- VIDEO: keep this before or after content in the DOM — z-index controls stacking -->
   <video
     class="hero-video"
@@ -875,14 +900,25 @@ nav.site-nav { z-index: 100;}
     poster="img/party-poster.jpg"
     aria-hidden="true"
     tabindex="-1"
-  >
+  >  
     <source src="img/party.mp4" type="video/mp4">
     <!-- Fallback text -->
     Your browser does not support the video tag.
   </video>
 
-  <!-- CONTENT: placed above video -->
+
+  <audio id="bgMusic" src="audio/jaipuria-party.mp3"  
+         autoplay loop>
+  </audio>
+
+  <div id="music" class="music">
+    <hr id="stop-music" class="stop-music show">
+    <i data-lucide="music"></i>
+  </div>
   
+
+   <!-- CONTENT: placed above video -->
+
   <div class="container margin-up">
     <div class="label">Official Invitation</div>
 
@@ -899,6 +935,9 @@ nav.site-nav { z-index: 100;}
     </div>
   </div>
 </section>
+
+
+
 
 <div id="mobile-menu" aria-hidden="true">
     <button id="close-menu" class="close" aria-label="Close menu"><i data-lucide="x" style="width:28px;height:28px;"></i></button>
@@ -921,6 +960,7 @@ nav.site-nav { z-index: 100;}
 
 
 
+  <!-- Event Details Section -->
   
   <section id="details" class="section">
     <div class="container">
@@ -1005,6 +1045,8 @@ nav.site-nav { z-index: 100;}
     <div class="muted" id="popupDate"></div>
     <div class="sub-muted" id="popupTime"></div>
 
+    <a style="display: none; justify-content: center;" id="openMap">open to map</a>
+
     <button id="eventPopupClose">Close</button>
 
   </div>
@@ -1032,7 +1074,7 @@ nav.site-nav { z-index: 100;}
 
                 <div id="track-pro" class="production-track">
 
-                    <div class="production-carousel-card">
+                    <div class="production-carousel-card" onclick="openPopPhoto('img/jaipuri-1.jpeg')">
                         <div class="production-in-card">
                             <div class="production-img">
                                 <img src='img/jaipuri-1.jpeg' alt="Automated Machine"/>
@@ -1040,7 +1082,7 @@ nav.site-nav { z-index: 100;}
                         </div>
                     </div>
 
-                    <div class="production-carousel-card">
+                    <div class="production-carousel-card" onclick="openPopPhoto('img/jaipuri-2.jpeg')">
                         <div class="production-in-card">
                             <div class="production-img">
                                 <img src='img/jaipuri-2.jpeg' alt="Shoe Lasting"/>
@@ -1049,7 +1091,7 @@ nav.site-nav { z-index: 100;}
                         </div>
                     </div>
 
-                    <div class="production-carousel-card">
+                    <div class="production-carousel-card" onclick="openPopPhoto('img/jaipuri-3.jpeg')">
                         <div class="production-in-card">
                             <div class="production-img">
                                 <img src='img/jaipuri-3.jpeg' alt="Drying"/>
@@ -1058,7 +1100,7 @@ nav.site-nav { z-index: 100;}
                         </div>
                     </div>
 
-                    <div class="production-carousel-card">
+                    <div class="production-carousel-card" onclick="openPopPhoto('img/jaipuri-4.jpeg')">
                         <div class="production-in-card">
                             <div class="production-img">
                                 <img src='img/jaipuri-4.jpeg' alt="Dyeing"/>
@@ -1068,7 +1110,7 @@ nav.site-nav { z-index: 100;}
                     </div>
 
 
-                    <div class="production-carousel-card">
+                    <div class="production-carousel-card" onclick="openPopPhoto('img/jaipuri-6.jpeg')">
                         <div class="production-in-card">
                             <div class="production-img">
                                 <img src='img/jaipuri-6.jpeg' alt="Heat Press"/>
@@ -1078,7 +1120,7 @@ nav.site-nav { z-index: 100;}
                     </div>
 
 
-                    <div class="production-carousel-card">
+                    <div class="production-carousel-card" onclick="openPopPhoto('img/jaipuri-7.jpeg')">
                         <div class="production-in-card">
                             <div class="production-img">
                                 <img src='img/jaipuri-7.jpeg' alt="Heat Press"/>
@@ -1091,7 +1133,7 @@ nav.site-nav { z-index: 100;}
         
 
 
-                    <div class="production-carousel-card">
+                    <div class="production-carousel-card" onclick="openPopPhoto('img/jaipuri-5.jpeg')">
                         <div class="production-in-card">
                             <div class="production-img">
                                 <img src='img/jaipuri-5.jpeg' alt="Heat Press"/>
@@ -1101,7 +1143,7 @@ nav.site-nav { z-index: 100;}
                     </div>
 
 
-                    <div class="production-carousel-card">
+                    <div class="production-carousel-card" onclick="openPopPhoto('img/jaipuri-10.jpeg')">
                         <div class="production-in-card">
                             <div class="production-img">
                                 <img src='img/jaipuri-10.jpeg' alt="Heat Press"/>
@@ -1110,7 +1152,7 @@ nav.site-nav { z-index: 100;}
                             </div>
                     </div>
 
-                    <div class="production-carousel-card">
+                    <div class="production-carousel-card" onclick="openPopPhoto('img/jaipuri-11.jpeg')">
                         <div class="production-in-card">
                             <div class="production-img">
                                 <img src='img/jaipuri-11.jpeg' alt="Heat Press"/>
@@ -1120,7 +1162,7 @@ nav.site-nav { z-index: 100;}
                     </div>
 
 
-                    <div class="production-carousel-card">
+                    <div class="production-carousel-card" onclick="openPopPhoto('img/jaipuri-12.jpeg')">
                         <div class="production-in-card">
                             <div class="production-img">
                                 <img src='img/jaipuri-12.jpeg' alt="Heat Press"/>
@@ -1129,7 +1171,7 @@ nav.site-nav { z-index: 100;}
                             </div>
                     </div>
 
-                    <div class="production-carousel-card">
+                    <div class="production-carousel-card" onclick="openPopPhoto('img/jaipuri-14.jpeg')">
                         <div class="production-in-card">
                             <div class="production-img">
                                 <img src='img/jaipuri-14.jpeg' alt="Heat Press"/>
@@ -1149,6 +1191,26 @@ nav.site-nav { z-index: 100;}
     </section>
 
   <!-- end of 50 carousel -->
+
+
+
+
+
+<!-- Carousel Photos on PopUp -->
+<div class="popup-photo" id="popup-photo">
+  <div class="popup-photo-content">
+    <span class="close-photo-btn" id="popup-photo" >&times;</span>
+	   <div class="pop-photo-above">
+            <div class="pop-photo-content"><h1>Batch <span style="color: #00f3ff">2001</span></h1></div>
+		            <div class="pop-photo-style">
+		            	<img id="popup-photo-img" src="" >
+	                </div>
+	</div>
+  </div>
+</div>
+
+
+
 
 
 
@@ -1262,11 +1324,15 @@ nav.site-nav { z-index: 100;}
 
           <!-- <div style="border-top: 1px solid rgba(255, 255, 255, 0.747); margin: 0 5px;"></div> -->
 
-          <div style="padding-bottom: 5px">
+          <div style="padding-bottom: 0px ">
             <p style="margin-top: 0; font-size: 15px; color: rgba(255, 255, 255, 0.747);">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, asperiores, ratione quaerat natus officia animi adipisci quia veniam, 
-              enim ipsa dolorem sapiente delectus fugit inventore. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias, nisi.
+              Dear Batch Mates, It has been enthralling for the whole team to reach out to all of you once again and extremely Glad to see your willingness to be part of The Event.
+              We Eagerly Wait for your presence at the Nostalgic Once in a Life Event.
             </p>
+
+             <!-- <p style="padding: 0px 0; font-size: 16px; color: rgba(255, 255, 255, 0.747);" >We Eagerly Wait for your presence at the Nostalgic Once in a Life Event.</p> -->
+            <p style="font-size: 16px;">RETURN TO YOUR ROOTS, FIND YOURSELF.... ONCE AGAIN !!!</p>
+
             
             <div>
               <div class="input-wrap">
@@ -1276,6 +1342,10 @@ nav.site-nav { z-index: 100;}
               <!-- minimum 500 donation amount -->
               <div id="minDonate" style="display: none; margin-left: 40px; padding: 5px; font-size: 14px; color: rgb(255, 64, 64);"> 
                 Donate minimum 500 Rs.  
+              </div>
+              <!-- maximum 10,000 donation amount -->
+              <div id="maxDonate" style="display: none; margin-left: 40px; padding: 5px; font-size: 14px; color: rgb(255, 64, 64);"> 
+                Donate maximum 10,000 Rs.  
               </div>
             </div>
 
@@ -1402,7 +1472,7 @@ nav.site-nav { z-index: 100;}
 
 
 
-
+<!-- Contact Form Section -->
 
 
 <div class="contact-section">
@@ -1561,7 +1631,7 @@ nav.site-nav { z-index: 100;}
 
 
         const KEY_ID = 'rzp_test_RmjDo8lq7GTEsp';   
-        const BACKEND_URL = 'https://api.ultimatejaipurians.in';  
+         const BACKEND_URL = 'https://api.ultimatejaipurians.in';  
         //const BACKEND_URL = 'http://localhost:8000'  
 
 
@@ -1579,6 +1649,7 @@ const popupIcon = document.getElementById("popupIcon");
 
 // All cards
 const cards = document.querySelectorAll(".eventPopupTrigger");
+const openMap = document.getElementById('openMap');
 
 // When clicking any card
 cards.forEach(card => {
@@ -1588,7 +1659,14 @@ cards.forEach(card => {
     dateEl.textContent = card.dataset.date;
     timeEl.textContent = card.dataset.time;
 
+    const title = titleEl.textContent;
+
      popupIcon.setAttribute("data-lucide", card.dataset.icon);
+
+     if(title === 'Where?'){
+       openMap.style.display = 'flex'
+       openMap.setAttribute("href", 'https://maps.app.goo.gl/DSnifjemDkRE39xM9?g_st=aw')
+     }
 
     // re-render lucide icons
     lucide.createIcons();
@@ -1600,12 +1678,38 @@ cards.forEach(card => {
 // Close popup
 closeBtn.addEventListener("click", () => {
   overlay.style.display = "none";
+  openMap.style.display = 'none'
 });
 
 // Click outside to close
 overlay.addEventListener("click", (e) => {
-  if (e.target === overlay) overlay.style.display = "none";
+  if (e.target === overlay) {
+    overlay.style.display = "none";
+    openMap.style.display = 'none'
+  }
+
 });
+
+
+
+
+          //------------------------------------
+          //     Photo Pop Up Open Logic
+          //------------------------------------
+
+             function openPopPhoto(imgSrc){
+	            document.getElementById("popup-photo-img").src = imgSrc;
+	            document.getElementById("popup-photo").style.display = "flex";
+
+	            function closePopup() {
+                document.getElementById("popup-photo").style.display = "none";
+                }
+
+               document.getElementById("popup-photo").addEventListener("click", (e) => {
+                if (e.target.id === "popup-photo") closePopup();
+               });
+
+             }
 
 
 
@@ -1659,16 +1763,21 @@ overlay.addEventListener("click", (e) => {
 
         const donateAmount = document.getElementById('donate');
         const minimumDonate = document.getElementById('minDonate');
+        const maximumDonate = document.getElementById('maxDonate');
 
          donateAmount.addEventListener('change', function () {
 
           let checkAmount = this.value;
+          
           if(checkAmount < 500){
             minimumDonate.style.display = 'block'
           } 
-
-          if(checkAmount >= 500){
+          else if(checkAmount >= 500 && checkAmount <=10000){
             minimumDonate.style.display = 'none'
+            maximumDonate.style.display = 'none'
+          }
+          else if(checkAmount > 10000){
+            maximumDonate.style.display = 'block'
           }
 
         })
@@ -1718,7 +1827,12 @@ overlay.addEventListener("click", (e) => {
     const attendees = getAttendeesCount();
     attendSpan.textContent = attendees;
 
-    const donateAmt = Number(String(donateInput.value).replace(/[^0-9.-]/g, '')) || 0;
+    let donateAmt = Number(String(donateInput.value).replace(/[^0-9.-]/g, '')) || 0;
+
+    if(donateAmt >10000){
+      donateAmt = 10000
+    }
+
     const passValue = getPassPrice(attendees);
 
     const grand = passValue + donateAmt;
@@ -1778,7 +1892,13 @@ overlay.addEventListener("click", (e) => {
         document.getElementById('popup').style.display = 'flex';
 
         // const noPeople = Number(document.getElementById("attend").value);
-        const donateAmt = Number(document.getElementById('donate').value.trim());
+        let donateAmt = Number(document.getElementById('donate').value.trim());
+          
+          if(donateAmt > 10000){
+            donateAmt = 10000
+          }
+
+        
          
         let passValue;
         if(noPeople == 1){
@@ -1832,10 +1952,16 @@ overlay.addEventListener("click", (e) => {
       const adhaar = document.getElementById("adhaar").value.trim();
       
       const noPeople = Number(document.getElementById("attend").textContent);
-      const donateAmt = Number(document.getElementById('donate').value.trim());
+      let donateAmt = Number(document.getElementById('donate').value.trim());
 
       const someone = document.querySelector(".someone-check:checked")?.value || "";
       const support = document.querySelector(".support-check:checked")?.value || "";
+
+          
+          
+          if(donateAmt > 10000){
+            donateAmt = 10000
+          }
          
 
       let passValue;
@@ -1852,15 +1978,11 @@ overlay.addEventListener("click", (e) => {
         const totalPayPrice = passDonateValue + payValue;
 
 
-      const formData = { name, phone, email, address, city, adhaar, noPeople, donateAmt, someone, support, donateAmt, totalPayPrice };
+      const formData = { name, phone, email, address, city, adhaar, noPeople, donateAmt, someone, support,passValue, donateAmt, totalPayPrice };
       console.log("FORM DATA:", formData);
 
           
         async function initiatePayment() {
-            // const btn = document.getElementById('pay-btn');
-            // const originalText = btn.innerText;
-            // btn.innerText = 'PROCESSING...';
-            // btn.disabled = true;
 
             try {
                 // 1. Call Backend to Create Order
@@ -2040,8 +2162,7 @@ overlay.addEventListener("click", (e) => {
   
 
 
-
-    //COntact form whatsapp send
+//COntact form whatsapp send
 
 document.getElementById('contact-btn').addEventListener('click', function (e) {
   e.preventDefault();
@@ -2064,6 +2185,39 @@ message: ${message}
 
   window.open(url, '_blank');
 });
+
+
+
+
+
+// Stop Music Logic
+
+const music = document.getElementById('music');
+const noMusic = document.getElementsByClassName('stop-music');
+const audio = document.getElementById('bgMusic');
+
+let checkMusic ;
+music.addEventListener('click', () => {
+
+  if(!checkMusic){
+    noMusic[0].style.display = 'block';
+    audio.pause();
+    checkMusic = true;
+  } else {
+    noMusic[0].style.display = 'none';
+    audio.play();
+    checkMusic = false;
+  }
+
+});
+
+
+window.addEventListener('load', () => {
+  console.log("Audio start------------")
+  audio.play();
+  checkMusic = false;
+});
+
 
 
 
