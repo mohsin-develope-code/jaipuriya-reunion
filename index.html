@@ -841,6 +841,20 @@ nav.site-nav { z-index: 100;}
 }
 
 
+@media(max-width: 786px) {
+  .music{
+  position: absolute;
+  background-color: #222;
+  padding: 5px 6px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 15%;
+  right: 6%;
+}
+}
+
 
 
   </style>
@@ -2213,9 +2227,19 @@ music.addEventListener('click', () => {
 
 
 window.addEventListener('load', () => {
-  console.log("Audio start------------")
-  audio.play();
-  checkMusic = false;
+  
+  let checkMusic = false;
+  if(!checkMusic){
+    noMusic[0].style.display = 'block';
+    audio.pause();
+    checkMusic = true;
+  } else {
+    noMusic[0].style.display = 'none';
+    audio.play();
+    checkMusic = false;
+  }
+
+
 });
 
 
