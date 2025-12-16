@@ -10,11 +10,11 @@
     <title>Reunion Event 26</title>
     <!-- Razorpay SDK -->
     <script src="https://checkout.razorpay.com/v1/checkout.js" async></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Righteous&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" async/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" async crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Righteous&display=swap" rel="stylesheet" async>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" async></script>
     <link rel="stylesheet" href="production-carousel-claude.css">
     <link rel="stylesheet" href="popup.css">
     <link rel="stylesheet" href="contactForm.css">
@@ -821,20 +821,27 @@ nav.site-nav { z-index: 100;}
 .music{
   position: absolute;
   background-color: #222;
-  padding: 9px 10px;
+  width: 20px;
+  height: 20px;
+  padding: 5px 6px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 15%;
+  bottom: 5%;
   right: 2%;
+  z-index: 8;
+}
+
+.music img{
+  width: 100%;
+  height: 100%;
 }
 
 .stop-music{
-  display: none;           /* IMPORTANT */
+  display: flex;           /* IMPORTANT */
   position: absolute;
-  width: 20px;
-  height: 2px;
+  width: 25px;
   background-color: white;
   z-index: 10;
   transform: rotate(45deg);
@@ -886,7 +893,7 @@ nav.site-nav { z-index: 100;}
   <div class="nav-inner container">
     <a class="brand" href="#">
       <span class="logo" aria-hidden="true">
-        <img src="img/remove-bg.png" alt="Jaipuria-Logo">
+        <img src="img/remove-bg.webp" alt="Jaipuria-Logo">
       </span>
       <span class="title">Ultimate Jaipurians <span style="color:var(--accent-cyan)">'2001 Batch</span></span>
     </a>
@@ -912,6 +919,9 @@ nav.site-nav { z-index: 100;}
 <section id="hero" class="hero">
 
 
+  
+
+
   <!-- VIDEO: keep this before or after content in the DOM — z-index controls stacking -->
   <video
     class="hero-video"
@@ -919,19 +929,19 @@ nav.site-nav { z-index: 100;}
     muted
     loop
     playsinline
-    poster="img/party-poster.jpg"
+    loading="lazy"
   >  
     <source src="img/party.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
 
-  <audio id="bgMusic" src="audio/jaipuria-party.mp3" preload="none" >
+  <audio id="bgMusic" src="audio/jaipuria-party.mp3" preload="auto" >
   </audio>
 
   <div id="music" class="music">
-    <hr id="stop-music" class="stop-music show">
-    <i data-lucide="music"></i>
+    <hr id="stop-music" class="stop-music">
+       <img src="img/tune-speaker.png" alt="" srcset="">
   </div>
   
 
