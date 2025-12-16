@@ -10,12 +10,6 @@
         //const BACKEND_URL = 'http://localhost:8000'  
 
 
-        window.addEventListener('load', () => {
-  initVenuePopup();
-  initDonationLogic();
-  initGrandTotal();
-  initFormPopup();
-});
 
 
 
