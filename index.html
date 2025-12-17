@@ -1650,10 +1650,15 @@ nav.site-nav { z-index: 100;}
   formData.append('photo', file);
 
   try {
-    const res = await fetch('https://api.ultimatejaipurians.in/upload/photos', {
+     const res = await fetch('https://api.ultimatejaipurians.in/upload/photos', {
       method: 'POST',
       body: formData
     });
+
+
+    if(res.status){
+      window.location.reload();
+    }
 
     console.log('STATUS:', res.status);
 

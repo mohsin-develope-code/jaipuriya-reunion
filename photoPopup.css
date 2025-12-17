@@ -1,3 +1,8 @@
+
+
+
+
+
 .popup-photo {
   position: fixed !important;
   top: 0;
@@ -8,8 +13,8 @@
   z-index: 1000000 !important;
   isolation: isolate;   /* 🔥 VERY IMPORTANT */
 
-  /* background: rgba(0, 0, 0, 0.7); */
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.7);
+  /* background: rgba(0,0,0,0.4); */
   backdrop-filter: blur(20px);
   display: none;
   justify-content: center;
@@ -18,7 +23,7 @@
 
 
 .popup-photo-content {
-  /* background: #222; */
+  background: #222;
   padding: 20px;
   border-radius: 15px;
   position: relative;
