@@ -1188,6 +1188,8 @@ nav.site-nav { z-index: 100;}
 
                     <form id="uploadForm" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap:20px">
                       <input type="file" id="photo" accept="image/*" />
+
+                      <input id="passKey" type="text">
                       <button class="btn-primary" type="submit">Upload</button>
 
                     </form>
@@ -1639,6 +1641,7 @@ nav.site-nav { z-index: 100;}
   console.log('FORM SUBMIT INTERCEPTED');
 
   const fileInput = document.getElementById('photo');
+  const passKey = document.getElementById('passKey').value.trim();
   const file = fileInput.files[0];
 
   if (!file) {
@@ -1648,9 +1651,11 @@ nav.site-nav { z-index: 100;}
 
   const formData = new FormData();
   formData.append('photo', file);
+  formData.append('key', passKey)
+  
 
   try {
-     const res = await fetch('https://api.ultimatejaipurians.in/upload/photos', {
+      const res = await fetch('https://api.ultimatejaipurians.in/upload/photos', {
       method: 'POST',
       body: formData
     });
