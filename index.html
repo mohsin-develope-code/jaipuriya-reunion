@@ -906,6 +906,42 @@ nav.site-nav { z-index: 100;}
 }
 
 
+.logo-section{
+  height: 100%; 
+  width: 100%; 
+  opacity: 0.3; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 40px 0 20px 0;
+}
+
+.logo-section-head{
+  height: 400px; 
+  width: auto;
+}
+
+.bg-logo-section{
+  width: 28rem; 
+  height: 28rem; 
+  opacity: 0.2;
+}
+
+@media(max-width: 786px){
+  .logo-section-head{
+    height: 200px; 
+    width: auto;
+}
+
+  .bg-logo-section{
+   width: 18rem; 
+   height: 18rem; 
+   opacity: 0.2;
+}
+
+}
+
+
 
 
 
@@ -1037,6 +1073,14 @@ nav.site-nav { z-index: 100;}
     <div id="g3" class="g-ball g-3"></div>
   </div>
 
+  <div class="gradient-bg">
+    <div style="width: 100%; height: 100%; 
+                display: flex; align-items: center; justify-content: center;">
+      <img class="bg-logo-section" src="img/jaipuria-logo.png" alt="">
+    </div>
+
+  </div>
+
 
 
 
@@ -1131,18 +1175,6 @@ nav.site-nav { z-index: 100;}
 
   </div>
 </div>
-
-
-
-   <!-- Transparent Logo Section -->
-
-   <div style="height: 100%; width: 100%; opacity: 0.3; 
-               display: flex; align-items: center; justify-content: center; 
-               padding: 40px 0 20px 0;">
-      <div style="height: 400px; width: auto;">
-      <img style="height: 100%; width: 100%;" src="img/logo-reunion.png" alt="">
-    </div>
-    </div>
 
 
 
