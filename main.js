@@ -5,7 +5,7 @@
         //--------------------------------------------
 
 
-        const KEY_ID = 'rzp_test_RmjDo8lq7GTEsp';   
+        const KEY_ID = 'rzp_live_RxuaHcTxqVVRbY';   
          const BACKEND_URL = 'https://api.ultimatejaipurians.in';  
          //  const BACKEND_URL = 'http://localhost:8000'  
 
