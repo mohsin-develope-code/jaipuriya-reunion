@@ -371,17 +371,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
 
   }
-)     
-
-
-//when page is remove or cancel from tab then clear all local storage data.
-// window.addEventListener('beforeunload', (event) => {
-//   localStorage.clear();
-// });
-
-
-
-
+)
 
 
 //---------------------------------------------------
@@ -500,42 +490,42 @@ async function downloadTicketClicked() {
 
 // Auto-send on page load (upload only, no download)
 
-// if(!localStorage.getItem('fromLogin')){
-//   window.addEventListener('load', () => {
-//       setTimeout(sendEmailPDF, 200);
-//       }); 
-//   }
+if(!localStorage.getItem('fromLogin')){
+  window.addEventListener('load', () => {
+      setTimeout(sendEmailPDF, 200);
+      }); 
+  }
  
 
 
-// async function sendEmailPDF() {
+async function sendEmailPDF() {
 
-//   const emailReceiver = localStorage.getItem('email')
+  const emailReceiver = localStorage.getItem('email')
 
-//   try {
-//     const pdfBlob = await generatePdfBlobFromNode();
-//     const file = new File([pdfBlob], `ticket-${new Date().toISOString().slice(0,10)}.pdf`, { type: 'application/pdf' });
-//     const formData = new FormData();
-//     formData.append('file', file);
-//     formData.append('to', emailReceiver);
-//     formData.append('subject', 'Your Event Ticket');
-//     formData.append('text', 'Please find your ticket attached.');
+  try {
+    const pdfBlob = await generatePdfBlobFromNode();
+    const file = new File([pdfBlob], `ticket-${new Date().toISOString().slice(0,10)}.pdf`, { type: 'application/pdf' });
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('to', emailReceiver);
+    formData.append('subject', 'Your Event Ticket');
+    formData.append('text', 'Please find your ticket attached.');
 
-//     const resp = await fetch(`${BACKEND_URL_OF_SUCCESS}/api/upload-pdf`, {
-//       method: 'POST',
-//       body: formData
-//     });
+    const resp = await fetch(`${BACKEND_URL_OF_SUCCESS}/api/upload-pdf`, {
+      method: 'POST',
+      body: formData
+    });
 
-//     if (!resp.ok) {
-//       const json = await resp.json().catch(()=>({}));
-//       console.error('Upload failed', json);
-//     } else {
-//       console.log('Uploaded & emailed successfully');
-//     }
-//   } catch (err) {
-//     console.error('sendEmailPDF error:', err);
-//   }
-// }
+    if (!resp.ok) {
+      const json = await resp.json().catch(()=>({}));
+      console.error('Upload failed', json);
+    } else {
+      console.log('Uploaded & emailed successfully');
+    }
+  } catch (err) {
+    console.error('sendEmailPDF error:', err);
+  }
+}
 
 
 
