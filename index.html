@@ -483,7 +483,6 @@ nav.site-nav { z-index: 100;}
       margin-bottom:8px; }
 
     .muted { 
-      color: #cbd5e1;
       padding: 0;
      }
 
@@ -555,7 +554,7 @@ nav.site-nav { z-index: 100;}
 
     input.form-input, textarea.form-input {
       width:100%;
-      padding:12px 14px 12px 42px;
+      padding:12px 42px 12px 42px;
       background: rgba(0,0,0,0.4);
       border: 1px solid rgba(255,255,255,0.12);
       color:var(--text);
@@ -1110,7 +1109,8 @@ nav.site-nav { z-index: 100;}
         <div class="card glass-panel eventPopupTrigger" 
                data-title="Lunch"
                data-date="Saturday, 28 March 2026"
-               data-time="12 to 3PM & SARJS"
+               data-time="12 to 3 PM"
+               data-address="Seth Anandram Jaipuria School, Kanpur"
                data-icon="img/lunch-break.png"
                data-dress ="White Shirt"
                style="border-top-color:var(--accent-purple);">
@@ -1122,9 +1122,6 @@ nav.site-nav { z-index: 100;}
           <div class="h3">Lunch</div>
           <div class="muted">Saturday, 28 march 2026</div>
            <div style="padding-top: 10px;">Venue & Time</div>
-          <!-- <div class="sub-muted">12 to 3PM & SARJS</div>
-          <div class="">Dress Code</div>
-          <div class="sub-muted">White Shirt</div> -->
           <button type="button" style="cursor: pointer; margin-top: 20px; padding: 8px 15px; border: none; border-radius: 20px; color: white; background: var(--accent-purple);">Know More</button>
         </div>
 
@@ -1134,7 +1131,8 @@ nav.site-nav { z-index: 100;}
         <div class="card glass-panel eventPopupTrigger" 
               data-title="Dinner"
               data-date="Saturday, 28 March 2026"
-              data-time="8 PM Onward & CRANBERRY LAWN, Mainawati Marg"
+              data-time="8 PM Onward"
+              data-address="Cranberry Lawn, Mainawati Marg, Kanpur"
               data-icon="img/dinner.png"
               data-dress ="Party Dress"
              style="border-top-color:var(--accent-pink);">
@@ -1146,30 +1144,12 @@ nav.site-nav { z-index: 100;}
           <div class="h3">Dinner</div>
           <div class="muted">Saturday, 28 march 2026</div>
           <div style="padding-top: 10px;">Venue & Time</div>
-          <!-- <div class="muted">8 PM Onward & CRANBERRY LAWN, Mainawati Marg</div>
-          <div class="">Dress Code</div>
-          <div class="sub-muted">Party Dress</div>
-          <div class="sub-muted"></div> -->
           <button type="button" style="cursor: pointer; margin-top: 20px; padding: 8px 15px; border: none; border-radius: 20px; color: white; background: var(--accent-pink);">Know More</button>
           </div>
 
 
 
 
-        <!-- <div class="card glass-panel eventPopupTrigger" 
-             style="border-top-color:var(--accent-pink);"
-              data-title="Dress Code"
-              data-date="Party Dress"
-              data-time="Dress to glow"
-              data-icon="shirt">
-
-          <div class="icon-wrap" style="background: rgba(244,114,182,0.08); color:var(--accent-pink);">
-            <i data-lucide="shirt" style="width:24px;height:24px;"></i>
-          </div>
-          <div class="h3">Dress Code</div>
-          <div class="muted">Party Dress</div>
-          <div class="sub-muted">Dress to glow</div>
-        </div> -->
 
       </div>
 
@@ -1187,21 +1167,23 @@ nav.site-nav { z-index: 100;}
   <div id="eventPopupBox">
 
     <div class="icon-wrap" style="background: rgba(124,58,237,0.12); color:var(--accent-purple); display: flex; align-items: center; justify-content: center;">
-      <div style="background-color: yellow; height: 40px; width: 40px; display: flex; justify-content: center; align-items: center; border-radius: 50%;">
+      <div style="background-color: rgba(245, 245, 11, 0.87); height: 40px; width: 40px; display: flex; justify-content: center; align-items: center; border-radius: 50%;">
         <img id="popupIcon" alt="" style="height: 70%; width: 70%;">
       </div>
     </div>
 
-    <div class="h3" id="popupTitle"></div>
-    <div class="muted" id="popupDate"></div>
+    <div style="font-size: 18px;" id="popupTitle"></div>
+    <div style="color: #9ca3af; 
+      font-size:13px;" id="popupDate"></div>
           
           <div>
-            <div style="margin-bottom: 2px;">Venue & Time</div>
-            <div class="sub-muted" id="popupTime"></div>
+            <div style="margin-bottom: 2px; font-size: 23px;">Venue</div>
+            <div style="margin-top: 5px; color: #cbd5e1; font-size: 14px;" class="sub-muted" id="popupTime"></div>
+            <div style="margin-top: 5px; color: #cbd5e1; font-size: 14px;" class="sub-muted" id="address"></div>
           </div>
           
           <div>
-            <div style="margin-bottom: 2px;">Dress Code</div>
+            <div style="margin-bottom: 2px; font-size: 16px;">Dress Code</div>
             <div class="sub-muted" id="dress-code"></div>
           </div>
 
@@ -1364,6 +1346,9 @@ nav.site-nav { z-index: 100;}
             <div class="input-wrap">
               <span class="input-icon"><i data-lucide="file-user" style="width:16px;height:16px;color:#9ca3af;"></i></span>
               <input id="adhaar" type="text" class="form-input" placeholder="Adhaar/PAN Card" required>
+              <span class="info-icon" 
+                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;" 
+                    title="Your username must be unique and contain at least 6 characters.">ⓘ</span>
             </div>
            </div>
 
@@ -1423,11 +1408,7 @@ nav.site-nav { z-index: 100;}
                 <span class="input-icon"><i data-lucide="hand-coins" style="width:16px;height:16px;color:#9ca3af;"></i></span>
                 <input id="donate" type="tel" class="form-input" placeholder="Donation Amount">
               </div>
-              <!-- minimum 500 donation amount -->
-              <!-- <div id="minDonate" style="display: none; margin-left: 40px; padding: 5px; font-size: 14px; color: rgb(255, 64, 64);"> 
-                Donate minimum 500 Rs.  
-              </div> -->
-              <!-- maximum 10,000 donation amount -->
+            
               <div id="maxDonate" style="display: none; margin-left: 40px; padding: 5px; font-size: 14px; color: rgb(255, 64, 64);"> 
                 Donate maximum 10,000 Rs.  
               </div>
@@ -1663,7 +1644,7 @@ nav.site-nav { z-index: 100;}
      </div>
     
       <div style="margin-top: auto;">
-        <span> © 2026 Seth Anandram Jaipuria School.</span>
+        <span> © 2026 Ultimate Jaipurians Club.</span>
          <div style="text-align: end;" >
          <a href="about.html">About Us</a>
          <a href="privacy-policy.html">Privacy Policy</a>

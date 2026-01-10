@@ -6,58 +6,61 @@
     <title>Terms & Conditions | Ultimate Jaipurians</title>
 
     <style>
-      :root {
-        --primary: black;
-        --text: #333;
-        --muted: #666;
-        --bg: #f9f9f9;
-        --card: #ffffff;
-      }
-
       * {
-        box-sizing: border-box;
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
         font-family: Arial, Helvetica, sans-serif;
       }
 
       body {
-        background-color: var(--bg);
-        color: var(--text);
-        line-height: 1.7;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #052e6c, #1a1a1a);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        color: #ffffff;
       }
 
-      .container {
+      .glass-container {
         max-width: 900px;
-        margin: 40px auto;
-        padding: 30px;
-        background: var(--card);
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-radius: 14px;
+        padding: 35px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
 
       h1 {
         text-align: center;
-        color: var(--primary);
+        font-size: 32px;
         margin-bottom: 10px;
+        letter-spacing: 1px;
       }
 
       .updated {
         text-align: center;
-        color: var(--muted);
         font-size: 14px;
+        opacity: 0.7;
         margin-bottom: 30px;
       }
 
       h2 {
-        margin-top: 30px;
+        margin-top: 28px;
         margin-bottom: 10px;
-        color: var(--primary);
         font-size: 20px;
+        color: #f5c542;
       }
 
       p {
         margin-bottom: 12px;
+        line-height: 1.7;
+        font-size: 15px;
+        opacity: 0.95;
       }
 
       ul {
@@ -72,22 +75,23 @@
       .contact {
         margin-top: 30px;
         padding: 15px;
-        background: #f1f1f1;
-        border-left: 4px solid var(--primary);
+        background: rgba(255, 255, 255, 0.08);
+        border-left: 4px solid #f5c542;
+        border-radius: 6px;
       }
 
       footer {
         text-align: center;
-        margin: 30px 0;
+        margin-top: 30px;
         font-size: 14px;
-        color: var(--muted);
+        opacity: 0.6;
       }
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="glass-container">
       <h1>Terms and Conditions</h1>
-      <div class="updated">Last updated: 09-01-2026</div>
+      <div class="updated">Last updated: 09/01/2026</div>
 
       <p>
         These Terms and Conditions govern your use of the website and services
@@ -186,8 +190,8 @@
         <p><strong>Ultimate Jaipurians</strong></p>
         <p>Email: ultimatejaipurians@gmail.com</p>
       </div>
-    </div>
 
-    <footer>© 2026 Ultimate Jaipurians. All rights reserved.</footer>
+      <footer>© 2026 Ultimate Jaipurians Club. All rights reserved.</footer>
+    </div>
   </body>
 </html>

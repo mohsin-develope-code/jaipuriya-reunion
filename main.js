@@ -5,7 +5,7 @@ const BACKEND_URL_OF_INDEX = "https://api.ultimatejaipurians.in";
 //const BACKEND_URL_OF_INDEX = "http://localhost:8000";
 
 //-------------------------------
-//       Vanue Cards PopUp
+//       Venue Cards PopUp
 //-------------------------------
 
 const overlay = document.getElementById("eventPopupOverlay");
@@ -15,6 +15,7 @@ const closeBtn = document.getElementById("eventPopupClose");
 const titleEl = document.getElementById("popupTitle");
 const dateEl = document.getElementById("popupDate");
 const timeEl = document.getElementById("popupTime");
+const address = document.getElementById("address");
 const popupIcon = document.getElementById("popupIcon");
 const dress = document.getElementById("dress-code");
 
@@ -30,12 +31,19 @@ cards.forEach((card) => {
     timeEl.textContent = card.dataset.time;
     popIcon.setAttribute("src", card.dataset.icon);
     dress.textContent = card.dataset.dress;
+    address.textContent = card.dataset.address;
 
     // popupIcon.innerHTML = `<img id="popupIcon" src="${card.dataset.icon}" style="width:44px;height:44px;"></img>`;
 
     const title = titleEl.textContent;
 
     if (title === "Dinner") {
+      openMap.style.display = "flex";
+      openMap.setAttribute(
+        "href",
+        "https://maps.app.goo.gl/DSnifjemDkRE39xM9?g_st=aw"
+      );
+    } else if (title === "Lunch") {
       openMap.style.display = "flex";
       openMap.setAttribute(
         "href",
