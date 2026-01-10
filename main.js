@@ -28,7 +28,6 @@ cards.forEach((card) => {
   card.addEventListener("click", () => {
     titleEl.textContent = card.dataset.title;
     dateEl.textContent = card.dataset.date;
-    timeEl.textContent = card.dataset.time;
     popIcon.setAttribute("src", card.dataset.icon);
     dress.textContent = card.dataset.dress;
     address.textContent = card.dataset.address;
@@ -39,15 +38,17 @@ cards.forEach((card) => {
 
     if (title === "Dinner") {
       openMap.style.display = "flex";
+      openMap.textContent = "Open To Map";
       openMap.setAttribute(
         "href",
         "https://maps.app.goo.gl/DSnifjemDkRE39xM9?g_st=aw"
       );
     } else if (title === "Lunch") {
       openMap.style.display = "flex";
+      openMap.textContent = "Open Map";
       openMap.setAttribute(
         "href",
-        "https://maps.app.goo.gl/DSnifjemDkRE39xM9?g_st=aw"
+        "https://maps.app.goo.gl/u2v1BB323MhPc8GS6?g_st=aw"
       );
     }
 
