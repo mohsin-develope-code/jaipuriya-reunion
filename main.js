@@ -1,7 +1,8 @@
-// const KEY_ID = 'rzp_live_RxuaHcTxqVVRbY';
-const KEY_ID = "rzp_test_RmjDo8lq7GTEsp";
+const KEY_ID = "rzp_live_RxuaHcTxqVVRbY";
 const BACKEND_URL_OF_INDEX = "https://api.ultimatejaipurians.in";
-// const BACKEND_URL_OF_INDEX = 'http://localhost:8000'
+
+// const KEY_ID = "rzp_test_RmjDo8lq7GTEsp";
+//const BACKEND_URL_OF_INDEX = "http://localhost:8000";
 
 //-------------------------------
 //       Vanue Cards PopUp
@@ -251,16 +252,16 @@ openPop.addEventListener("click", function (e) {
       donateAmt = 10000;
     }
 
-    // let passValue;
-    // if(noPeople == 1){
-    //   passValue = 5000*0;
-    // } else if(noPeople == 2){
-    //   passValue = 7500*0;
-    // } else {
-    //   passValue = 0
-    // }
+    let passValue;
+    if (noPeople == 1) {
+      passValue = 5000;
+    } else if (noPeople == 2) {
+      passValue = 7500;
+    } else {
+      passValue = 0;
+    }
 
-    let passValue = 1;
+    // let passValue = 1;
 
     const totalValue = passValue + donateAmt;
     const taxValue = (5 * totalValue) / 100;
@@ -302,14 +303,14 @@ async function paymentRazorpay() {
     donateAmt = 10000;
   }
 
-  let passValue = 1;
-  //   if(noPeople == 1){
-  //     passValue = 5000*0;
-  //   } else if(noPeople == 2){
-  //     passValue = 7500*0;
-  //   } else {
-  //     passValue = 0
-  //   }
+  let passValue;
+  if (noPeople == 1) {
+    passValue = 5000;
+  } else if (noPeople == 2) {
+    passValue = 7500;
+  } else {
+    passValue = 0;
+  }
 
   const passDonateValue = passValue + donateAmt;
   const payValue = (5 * passDonateValue) / 100;
@@ -331,49 +332,6 @@ async function paymentRazorpay() {
     totalPayPrice,
   };
   console.log("FORM DATA:", formData);
-
-  // if(totalPayPrice == 0){
-  //   console.log("Zero Amount User pass Generated....")
-
-  //   try {
-
-  //     const zeroPayPass = await fetch(`${BACKEND_URL_OF_INDEX}/no-payment-pass`,
-  //                                     {
-  //                                       method: 'POST',
-  //                                       headers: { 'Content-Type': 'application/json' },
-  //                                       body: JSON.stringify({formData})
-  //                                     }
-  //     )
-
-  //     const result = await zeroPayPass.json();
-  //     const {data} = result;
-
-  //     console.log("No Pay Pass API Completed data is below")
-  //     console.log(result)
-
-  //     if (result.status === 'success') {
-  //               console.log("Verification successfully...")
-  //               localStorage.setItem('no-people', data.how_many_people)
-  //               localStorage.setItem('city', data.city)
-  //               localStorage.setItem('phone', data.user_number)
-  //               localStorage.setItem('email', data.user_email)
-  //               localStorage.setItem('name', data.user_name)
-  //               localStorage.setItem('serialNo', data.serialNo)
-  //               localStorage.setItem('qr-code', data.qr_code)
-  //               localStorage.setItem('userSerial',data.bookId)
-
-  //               window.location.href = 'success.html';
-
-  //           } else {
-  //               alert("Verification failed....")
-  //               console.log("Verification failed....")
-  //           }
-
-  //   } catch (error) {
-  //     console.log("Something is Error :-> ", error);
-  //   }
-
-  // } else {
 
   async function initiatePayment() {
     try {
