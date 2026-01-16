@@ -123,40 +123,6 @@ input.forEach((el) => {
   });
 });
 
-//----------------------------------------------
-//            Donation Amount Valiation
-//----------------------------------------------
-// const checkboxes = document.querySelectorAll(".donation-check");
-// const totalAmountEl = document.getElementById("totalAmount");
-
-// let donateTotal = 0;
-// function calculateTotal() {
-//   checkboxes.forEach((cb) => {
-//     if (cb.checked) {
-//       donateTotal += Number(cb.value);
-//     }
-//   });
-
-//   totalAmountEl.textContent = donateTotal;
-// }
-
-// checkboxes.forEach((cb) => {
-//   cb.addEventListener("change", calculateTotal);
-// });
-
-// const donateAmount = document.getElementById("donate")
-// const maximumDonate = document.getElementById("maxDonate");
-
-// donateAmount.addEventListener("change", function () {
-//   let checkAmount = this.value;
-
-//   if (checkAmount >= 0 && checkAmount <= 10000) {
-//     maximumDonate.style.display = "none";
-//   } else if (checkAmount > 10000) {
-//     maximumDonate.style.display = "block";
-//   }
-// });
-
 //----------------------------------------
 //   Toast Pop up
 //----------------------------------------
@@ -383,9 +349,6 @@ async function paymentRazorpay() {
   const someone = document.querySelector(".someone-check:checked")?.value || "";
   const support = document.querySelector(".support-check:checked")?.value || "";
 
-  // if (donateAmt > 10000) {
-  //   donateAmt = 10000;
-  // }
   const donateAmt = getDonationTotal();
   function getDonationTotal() {
     let total = 0;
@@ -444,7 +407,7 @@ async function paymentRazorpay() {
         root: "",
         flow: "DEFAULT",
         data: {
-          orderId: data.orderId.toString() /* update order id */,
+          orderId: data.orderId /* update order id */,
           token: data.txnToken /* update token value */,
           tokenType: "TXN_TOKEN",
           amount: data.amount /* update amount */,
@@ -454,18 +417,20 @@ async function paymentRazorpay() {
             console.log("notifyMerchant handler function called");
             console.log("eventName => ", eventName);
             console.log("data => ", data);
+            if ("App closed from the header icon" == data.message) {
+              document
+                .getElementById("downloadBtn")
+                .classList.remove("loading");
+            }
           },
         },
       };
-
-      console.log(config);
-      console.log("Now Everything is working before opening window");
 
       if (window.Paytm && window.Paytm.CheckoutJS) {
         console.log("Paytm checkout window runing start");
 
         await window.Paytm.CheckoutJS.init(config);
-        window.Paytm.CheckoutJS.invoke(); // MUST be inside click
+        window.Paytm.CheckoutJS.invoke();
       }
     }
 
