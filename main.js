@@ -176,13 +176,6 @@ infoBtn.addEventListener("click", () => {
   }, 5000);
 });
 
-document.addEventListener("click", (event) => {
-  if (!panToast.contains(event.target) && event.target !== infoBtn) {
-    panToast.classList.remove("show");
-    if (toastTimer) clearTimeout(toastTimer);
-  }
-});
-
 //----------------------------------------
 //       Donation Pop Up open
 //----------------------------------------
@@ -290,12 +283,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== INITIAL RENDER =====
   calculateAndRender();
-});
-
-const donateShow = document.getElementById("donateShow");
-const simpleAlert = document.getElementById("simpleAlert");
-donateShow.addEventListener("clicked", function () {
-  simpleAlert.style.display = "flex";
 });
 
 //-------------------------------------------------
