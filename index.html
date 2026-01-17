@@ -983,14 +983,17 @@ nav.site-nav { z-index: 100;}
 <style>
 .toast {
   position: fixed;
+  width: fit-content;
   height: fit-content;
   top: 50%;
-  right: 20px;
+  bottom: 50%;
+  left: 50%;
+  right: 50%;
   transform: translateY(-20px);
   background: #000;
   color: #fff;
   padding: 12px 18px;
-  margin: 0 10px;
+  /* margin: 0 1px; */
   border-radius: 6px;
   font-size: 14px;
   opacity: 0;
@@ -1005,17 +1008,20 @@ nav.site-nav { z-index: 100;}
   transform: translateY(20px);
 }
 
+
 .pantoast {
   width: 300px;
   position: fixed;
   height: fit-content;
+  top: 50%;
   bottom: 50%;
-  right: 70px;
+  left: 50%;
+  right: 50%;
   /* transform: translateY(-20px); */
   background: #000;
   color: #fff;
   padding: 12px 18px;
-  margin: 10px 10px;
+  margin: 10px auto;
   border-radius: 6px;
   font-size: 14px;
   opacity: 0;
@@ -1028,6 +1034,34 @@ nav.site-nav { z-index: 100;}
   opacity: 1;
   pointer-events: auto;
   transform: translateY(20px);
+}
+
+@media(max-width: 720px) {
+  
+.pantoast {
+  width: 50%;
+  position: fixed;
+  height: fit-content;
+  top: 50%;
+  left: 30%;
+  margin: auto;
+  background: #000;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.pantoast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(20px);
+}
+
 }
 
 
