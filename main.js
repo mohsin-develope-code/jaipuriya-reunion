@@ -39,14 +39,14 @@ cards.forEach((card) => {
       openMap.textContent = "Open To Map";
       openMap.setAttribute(
         "href",
-        "https://maps.app.goo.gl/DSnifjemDkRE39xM9?g_st=aw"
+        "https://maps.app.goo.gl/DSnifjemDkRE39xM9?g_st=aw",
       );
     } else if (title === "Lunch") {
       openMap.style.display = "flex";
       openMap.textContent = "Open Map";
       openMap.setAttribute(
         "href",
-        "https://maps.app.goo.gl/u2v1BB323MhPc8GS6?g_st=aw"
+        "https://maps.app.goo.gl/u2v1BB323MhPc8GS6?g_st=aw",
       );
     }
 
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const stagCheckbox = document.querySelector('.someone-check[value="stag"]');
   const plusOneCheckbox = document.querySelector(
-    '.someone-check[value="noStag"]'
+    '.someone-check[value="noStag"]',
   );
 
   const donationCheckboxes = document.querySelectorAll(".donation-check");
@@ -317,9 +317,8 @@ openPop.addEventListener("click", function (e) {
     const payPrice = totalValue + taxValue;
 
     document.getElementById("totalPass").innerText = `₹  ${passValue}`;
-    document.getElementById(
-      "totalDonate"
-    ).innerText = `₹  ${getDonationTotal()}`;
+    document.getElementById("totalDonate").innerText =
+      `₹  ${getDonationTotal()}`;
     document.getElementById("totalTax").innerText = `₹  ${taxValue}`;
     document.getElementById("totalPay").innerText = `₹ ${payPrice}`;
   }
@@ -396,7 +395,7 @@ async function paymentRazorpay() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        amount: 1, //totalPayPrice, final production time will open
+        amount: totalPayPrice, //final production time will open
         formData: formData,
       }),
     });
@@ -511,7 +510,7 @@ message: ${message}
   `;
 
   const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    text
+    text,
   )}`;
 
   window.open(url, "_blank");
