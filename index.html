@@ -439,6 +439,12 @@ nav.site-nav { z-index: 100;}
       z-index: -1;
     }
 
+    @media(max-width: 720px) {
+      .section {
+      padding: 60px 0px;
+    }
+    }
+
     .section .title {
       font-family:'Righteous', cursive;
       font-size:36px;
@@ -856,17 +862,14 @@ nav.site-nav { z-index: 100;}
 
 
 .music{
-  position: absolute;
   background-color: #222;
-  width: 20px;
-  height: 20px;
+  width: 23px;
+  height: 23px;
   padding: 5px 6px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  bottom: 5%;
-  right: 2%;
   z-index: 8;
 }
 
@@ -887,15 +890,15 @@ nav.site-nav { z-index: 100;}
 
 @media(max-width: 786px) {
   .music{
-  position: absolute;
+  /* position: absolute; */
   background-color: #222;
   padding: 5px 6px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  bottom: 10%;
-  right: 4%;
+  /* bottom: 10%;
+  right: 4%; */
 }
 }
 
@@ -981,10 +984,10 @@ nav.site-nav { z-index: 100;}
 .toast {
   position: fixed;
   height: fit-content;
-  top: 20px;
+  top: 50%;
   right: 20px;
   transform: translateY(-20px);
-  background: rgb(105, 105, 105);
+  background: #000;
   color: #fff;
   padding: 12px 18px;
   margin: 0 10px;
@@ -1001,6 +1004,34 @@ nav.site-nav { z-index: 100;}
   pointer-events: auto;
   transform: translateY(20px);
 }
+
+.pantoast {
+  width: 300px;
+  position: fixed;
+  height: fit-content;
+  bottom: 50%;
+  right: 70px;
+  /* transform: translateY(-20px); */
+  background: #000;
+  color: #fff;
+  padding: 12px 18px;
+  margin: 10px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.pantoast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(20px);
+}
+
+
+
 </style>
 
 
@@ -1071,14 +1102,13 @@ nav.site-nav { z-index: 100;}
     Your browser does not support the video tag.
   </video>
 
-
-  <audio id="bgMusic" src="audio/jaipuria-party.mp3" loop preload="auto" >
+  <!-- <audio id="bgMusic" src="audio/jaipuria-party.mp3" loop preload="auto" >
   </audio>
 
   <div id="music" class="music">
     <hr id="stop-music" class="stop-music">
        <img src="img/tune-speaker.png" alt="" srcset="">
-  </div>
+  </div> -->
   
 
    <!-- CONTENT: placed above video -->
@@ -1100,10 +1130,19 @@ nav.site-nav { z-index: 100;}
 
     <p class="lead">A grand homecoming of memories, friendships, and the spirit of Jaipuria.</p>
 
-    <div class="actions">
+    <div class="actions" style="display: flex; justify-content: center; align-items: center;">
       <a href="#register" class="ticket-primary">Get Your Ticket &nbsp;<i data-lucide="ticket" style="width:16px;height:16px;"></i></a>
-      <a href="pass-login.html" class="btn-secondary">View Your Ticket</a>
+       <audio id="bgMusic" src="audio/jaipuria-party.mp3" loop preload="auto" >
+        </audio>
+
+       <div id="music" class="music">
+         <hr id="stop-music" class="stop-music">
+            <img src="img/tune-speaker.png" alt="" srcset="">
+       </div>
+
     </div>
+
+
   </div>
 </section>
 
@@ -1523,9 +1562,9 @@ nav.site-nav { z-index: 100;}
   </section> 
 
    <!-- Pan Alert Box -->
-   <div id="panToast" class="toast">
-     The requirement to provide Permanent Account Number (PAN) and Aadhaar for various financial transactions and tax compliance is mandated by the Income Tax Act, 1961, specifically under Section 139AA.
-   </div>
+            <div id="panToast" class="pantoast">
+              The requirement to provide Permanent Account Number (PAN) and Aadhaar for various financial transactions and tax compliance is mandated by the Income Tax Act, 1961, specifically under Section 139AA.
+            </div>
 
   <!-- Alert Box -->
    <div id="toast" class="toast">
@@ -1562,7 +1601,7 @@ nav.site-nav { z-index: 100;}
                     <svg class="item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                     </svg>
-                    Donation
+                    Contribution
                 </div>
                 <div id="totalDonate" class="item-amount">NA</div>
             </div>
