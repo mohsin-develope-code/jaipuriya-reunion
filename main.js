@@ -267,7 +267,6 @@ openPop.addEventListener("click", function (e) {
   const city = document.getElementById("city").value.trim();
   const adhaar = document.getElementById("adhaar").value.trim();
   const noPeople = document.getElementById("attend").textContent;
-  // const donateAmt = Number(document.getElementById('donate').value.trim())
 
   const someone = document.querySelector(".someone-check:checked")?.value || "";
   const support = document.querySelector(".support-check:checked")?.value || "";
@@ -309,11 +308,8 @@ openPop.addEventListener("click", function (e) {
       passValue = 0;
     }
 
-    // let passValue = 1;
-
     const totalValue = passValue + getDonationTotal();
-    // + donateAmt;
-    const taxValue = (5 * totalValue) / 100;
+    const taxValue = (7 * totalValue) / 100;
     const payPrice = totalValue + taxValue;
 
     document.getElementById("totalPass").innerText = `₹  ${passValue}`;
@@ -372,7 +368,7 @@ async function paymentRazorpay() {
 
   const passDonateValue = passValue + donateAmt;
   // + donateAmt;
-  const payValue = (5 * passDonateValue) / 100;
+  const payValue = (7 * passDonateValue) / 100;
   const totalPayPrice = passDonateValue + payValue;
 
   const formData = {
