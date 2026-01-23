@@ -958,6 +958,17 @@ nav.site-nav { z-index: 100;}
   opacity: 0.2;
 }
 
+.qrpay-btn{
+  font-size: 16px;
+}
+
+@media(max-width: 786px){
+  .qrpay-btn{
+  font-size: 12px;
+}
+}
+
+
 @media(max-width: 786px){
   .logo-section-head{
     height: 200px; 
@@ -972,34 +983,34 @@ nav.site-nav { z-index: 100;}
 
 }
 
-
-
-
-
-
-
      </style>
 
 <style>
+
 .toast {
   position: fixed;
   width: fit-content;
   height: fit-content;
   top: 50%;
-  bottom: 50%;
   left: 50%;
-  right: 50%;
-  transform: translateY(-20px);
+  transform: translate(-50%, -50%);
+  
   background: #000;
   color: #fff;
   padding: 12px 18px;
-  /* margin: 0 1px; */
   border-radius: 6px;
   font-size: 14px;
+
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   z-index: 1000;
+}
+
+.toast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
 }
 
 .toast.show {
@@ -1063,6 +1074,52 @@ nav.site-nav { z-index: 100;}
 }
 
 }
+
+
+
+ .thankyou-container {
+      background: #ffffff;
+      max-width: 520px;
+      width: 100%;
+      padding: 32px 24px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .thankIcon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .thankHead {
+      font-size: 28px;
+      color: #222;
+      margin-bottom: 12px;
+    }
+
+    .thankBelowHead {
+      font-size: 16px;
+      color: #555;
+      font-weight: 400;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      .thankHead {
+        font-size: 22px;
+      }
+
+      .thankBelowHead {
+        font-size: 14px;
+      }
+
+      .thankIcon {
+        font-size: 40px;
+      }
+    }
 
 
 
@@ -1504,6 +1561,10 @@ nav.site-nav { z-index: 100;}
 
           <!-- donation part here -->
 
+          <div style="border-top: 0.5px solid rgba(255, 255, 255, 0.747);; margin: 0 5px; padding: 0;"></div>
+
+          <div style="padding-bottom: 12px;">Contributing to the event (Optional) </div>
+
   <ul class="checkbox-list spouse donateDesign" >
   <div style="display: flex; gap: 10px;">
     <li class="checkbox-row">
@@ -1529,31 +1590,6 @@ nav.site-nav { z-index: 100;}
   </div>
 </ul>
 
-
-          <!-- <div style="border-top: 1px solid rgba(255, 255, 255, 0.747); margin: 0 5px;"></div> -->
-
-          <!-- <div style="padding-bottom: 0px ">
-            <p style="margin-top: 0; font-size: 15px; color: rgba(255, 255, 255, 0.747);">
-              Dear Batch Mates, It has been enthralling for the whole team to reach out to all of you once again and extremely Glad to see your willingness to be part of The Event.
-              We Eagerly Wait for your presence at the Nostalgic Once in a Life Event.
-            </p>
-
-            <p style="font-size: 16px;">RETURN TO YOUR ROOTS, FIND YOURSELF.... ONCE AGAIN !!!</p>
-            <p style="font-size: 16px;">Donate For The Event</p>
-
-            
-            <div>
-              <div class="input-wrap">
-                <span class="input-icon"><i data-lucide="hand-coins" style="width:16px;height:16px;color:#9ca3af;"></i></span>
-                <input id="donate" type="tel" class="form-input" placeholder="Donation Amount">
-              </div>
-            
-              <div id="maxDonate" style="display: none; margin-left: 40px; padding: 5px; font-size: 14px; color: rgb(255, 64, 64);"> 
-                Donate maximum 10,000 Rs.  
-              </div>
-            </div>
-
-          </div> -->
 
           <div style="border-top: 0.5px solid rgba(255, 255, 255, 0.747);; margin: 0 5px; padding: 0;"></div>
 
@@ -1591,19 +1627,24 @@ nav.site-nav { z-index: 100;}
            </button>
         </form>
 
-      </div>
-    </div>
-  </section> 
+        <!-- Alert Box -->
+          <div id="toast" class="toast">
+           Thanking For Contributing Rs. <span> </span> <span id="toastAmount"></span> to Reunion Event
+          </div>
 
-   <!-- Pan Alert Box -->
+            <!-- Pan Alert Box -->
             <div id="panToast" class="pantoast">
               The requirement to provide Permanent Account Number (PAN) and Aadhaar for various financial transactions and tax compliance is mandated by the Income Tax Act, 1961, specifically under Section 139AA.
             </div>
 
-  <!-- Alert Box -->
-   <div id="toast" class="toast">
-  Thanking For Contributing Rs. <span> </span> <span id="toastAmount"></span> to Reunion Event
-</div>
+      </div>
+      
+    </div>
+
+    
+  </section> 
+
+  
 
   <!-- registeration confirm Popup  -->
 
@@ -1611,7 +1652,8 @@ nav.site-nav { z-index: 100;}
   <div class="popup-content">
     <span class="close-btn" id="closePop" >&times;</span>
 
-      <div class="billing-container">
+      <div class="billing-container" style="padding: 5px 0;">
+        <!-- <button onclick="paymentRazorpay()" style="background-color: black; color: white; padding: 4px; cursor: pointer;">Reunion</button> -->
         <div class="billing-header">
             <h1>Billing Summary</h1>
             <p>Review your charges</p>
@@ -1645,7 +1687,7 @@ nav.site-nav { z-index: 100;}
                     <svg class="item-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                     </svg>
-                    GST (5%)
+                    GST + Other Charges(7%)
                 </div>
                 <div id="totalTax" class="item-amount">NA</div>
             </div>
@@ -1659,7 +1701,8 @@ nav.site-nav { z-index: 100;}
         </div>
 
         <div class="billing-footer">
-                  <button onclick="paymentRazorpay()" id="downloadBtn" class="btn pay-button">
+                  <button onclick="paymentRazorpay()"
+                  id="downloadBtn" class="btn pay-button">
                     <span id="pay-btn" class="btn-text">Proceed to Payment</span>
                     <span class="loader"></span>
                   </button>
@@ -1668,6 +1711,75 @@ nav.site-nav { z-index: 100;}
 	    <!-- </div> -->
   </div>
 </div>
+
+
+
+
+<!-- QR , UPI POP UP -->
+
+<div class="pop-register" id="qrPopup">
+    <div class="popup-content">
+	  
+       <span class="close-btn" id="qrClosePop" >&times;</span>
+
+      <div class="container">
+         <div
+              class="qr-box"
+              style="
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <canvas id="partyQR" style="text-align: center"></canvas>
+              <h4 style="color:#000"> UPI ID: mohsin06388@okhdfc</h4>
+            </div>
+
+
+            <div>
+              <h3 style="color:#000; text-align: center;">Total Amount: <span id="qrTotalAmt"></span></h3>
+            </div>
+
+
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+
+          <button onclick="thankFunction()"  class="btn pay-button" style="background-color: black;">
+                    <a id="gpay" style="text-decoration: none; color: white;">
+                      <span id="pay-btn" class="btn-text qrpay-btn">G Pay</span>
+                    </a>
+          </button>
+
+          <button onclick="thankFunction()"  class="btn pay-button" style="background-color: black;" >
+                    <a id="phonePay" style="text-decoration: none; color: white; font-size: medium; ">
+                      <span id="pay-btn" class="btn-text qrpay-btn">Phone Pay</span>
+                    </a>
+          </button>
+
+          <button onclick="thankFunction()"  class="btn pay-button" style="background-color: black;">
+                    <a id="payTm" style="text-decoration: none; color: white;">
+                      <span id="pay-btn" class="btn-text qrpay-btn">PayTM</span>
+                    </a>
+          </button>
+        </div>
+
+        <div>
+        <h3 class="thankBelowHead">
+          Once your payment is completed, your event pass will be sent to your
+          registered email address within <strong>24 hours</strong>.
+        </h3>
+      </div>
+
+      </div>
+
+
+
+
+
+    </div>
+</div>
+
+
 
 
 
@@ -1803,8 +1915,10 @@ nav.site-nav { z-index: 100;}
 
      <script src="main.js" defer></script>
      <script src="carousel.js" defer></script>
-      <script type="application/javascript" src="https://secure.paytmpayments.com/merchantpgpui/checkoutjs/merchants/gfWLtr04448499190835.js" crossorigin="anonymous"></script>
+      <!-- <script type="application/javascript" src="https://secure.paytmpayments.com/merchantpgpui/checkoutjs/merchants/gfWLtr04448499190835.js" crossorigin="anonymous"></script> -->
      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+      <!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->
+      <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
 
     
@@ -1813,6 +1927,194 @@ nav.site-nav { z-index: 100;}
 
       const BACKEND_URL_INDEX_PAGE = 'https://api.ultimatejaipurians.in'
       //const BACKEND_URL_INDEX_PAGE = 'http://localhost:8000'
+
+
+      //-------------------------------------------------
+//          Popup Open Final Pricing
+//------------------------------------------------
+
+const openPop = document.getElementById("openPopup");
+
+openPop.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("number").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const address = document.getElementById("address").value;
+  const city = document.getElementById("city").value.trim();
+  const adhaar = document.getElementById("adhaar").value.trim();
+  const noPeople = document.getElementById("attend").textContent;
+
+  const someone = document.querySelector(".someone-check:checked")?.value || "";
+  const support = document.querySelector(".support-check:checked")?.value || "";
+  const donationCheckboxes = document.querySelectorAll(".donation-check");
+
+  if (
+    !name ||
+    !phone ||
+    !email ||
+    !address ||
+    !city ||
+    !adhaar ||
+    !someone ||
+    !support
+  ) {
+    alert("Please fill the form");
+    e.preventDefault();
+  } else {
+    document.getElementById("popup").style.display = "flex";
+
+    function getDonationTotal() {
+      let total = 0;
+
+      donationCheckboxes.forEach((cb) => {
+        if (cb.checked) {
+          total += Number(cb.value);
+        }
+      });
+
+      return total;
+    }
+
+    let passValue;
+    if (noPeople == 1) {
+      passValue = 5000;
+    } else if (noPeople == 2) {
+      passValue = 7500;
+    } else {
+      passValue = 0;
+    }
+
+    const totalValue = passValue + getDonationTotal();
+    const taxValue = (7 * totalValue) / 100;
+    const payPrice = totalValue + taxValue;
+
+    document.getElementById("totalPass").innerText = `₹  ${passValue}`;
+    document.getElementById("totalDonate").innerText =
+      `₹  ${getDonationTotal()}`;
+    document.getElementById("totalTax").innerText = `₹  ${taxValue}`;
+    document.getElementById("totalPay").innerText = `₹ ${payPrice}`;
+  }
+});
+
+document.getElementById("closePop").addEventListener("click", () => {
+  document.getElementById("popup").style.display = "none";
+  location.reload();
+});
+
+document.getElementById("qrClosePop").addEventListener("click", () => {
+  document.getElementById("qrPopup").style.display = "none";
+  location.reload();
+});
+
+
+
+
+//=================== Open popup final price ===========================
+
+async function paymentRazorpay() {
+   document.getElementById('qrPopup').style.display = 'flex'
+  const name = document.getElementById("name").value.trim();
+  const phone = Number(document.getElementById("number").value.trim());
+  const email = document.getElementById("email").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const city = document.getElementById("city").value.trim();
+  const adhaar = document.getElementById("adhaar").value.trim();
+
+  const noPeople = Number(document.getElementById("attend").textContent);
+  const donationCheckboxes = document.querySelectorAll(".donation-check");
+
+  const someone = document.querySelector(".someone-check:checked")?.value || "";
+  const support = document.querySelector(".support-check:checked")?.value || "";
+
+  const donateAmt = getDonationTotal();
+  function getDonationTotal() {
+    let total = 0;
+
+    donationCheckboxes.forEach((cb) => {
+      if (cb.checked) {
+        total += Number(cb.value);
+      }
+    });
+
+    return total;
+  }
+
+  let passValue;
+  if (noPeople == 1) {
+    passValue = 5000;
+  } else if (noPeople == 2) {
+    passValue = 7500;
+  } else {
+    passValue = 0;
+  }
+
+  const passDonateValue = passValue + donateAmt;
+  const payValue = (7 * passDonateValue) / 100;
+  const totalPayPrice = passDonateValue + payValue;
+
+  const formData = {
+    name,
+    phone,
+    email,
+    address,
+    city,
+    adhaar,
+    noPeople,
+    donateAmt,
+    someone,
+    support,
+    passValue,
+    totalPayPrice,
+  };
+
+  //------ qr pop up open from here----------------
+
+  document.getElementById("qrTotalAmt").textContent = totalPayPrice;
+
+  let qrCode = `tez://upi/pay?pa=mohsin06388@okhdfcbank&pn=MyStore&am=${totalPayPrice}&cu=INR`;
+
+  QRCode.toCanvas(document.getElementById("partyQR"), qrCode, {
+    width: 200,
+  });
+
+  const gpay = document.getElementById("gpay");
+  const phonePay = document.getElementById("phonePay");
+  const payTm = document.getElementById("payTm");
+
+  let upiLink = `tez://upi/pay?pa=mohsin06388@okhdfcbank&pn=UltimateJaipurians&am=${totalPayPrice}&cu=INR`;
+
+  gpay.setAttribute("href", upiLink);
+  phonePay.setAttribute("href", upiLink);
+  payTm.setAttribute("href", upiLink);
+
+  //------- qr pop up end  here -----------------------
+
+  async function initiatePayment() {
+    try {
+      // 1. Call Backend to Create Order
+      const response = await fetch(
+        `${BACKEND_URL_OF_INDEX}/user/create-order`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            formData: formData,
+          }),
+        },
+      );
+
+      const order = await response.json();
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Check console.");
+      resetBtn();
+    }
+  }
+
+  initiatePayment();
+}
       
 
 

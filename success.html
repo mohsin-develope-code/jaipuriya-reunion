@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -29,9 +29,15 @@
       }
 
       body {
-        font-family: Inter, Poppins, system-ui, -apple-system, "Segoe UI",
+        font-family:
+          Inter,
+          Poppins,
+          system-ui,
+          -apple-system,
+          "Segoe UI",
           Roboto;
-        background: radial-gradient(
+        background:
+          radial-gradient(
             600px 300px at 10% 20%,
             rgba(0, 212, 255, 0.06),
             transparent
@@ -292,7 +298,8 @@
         content: "";
         width: 90px;
         height: 90px;
-        background-image: linear-gradient(
+        background-image:
+          linear-gradient(
             45deg,
             #000 25%,
             transparent 25%,
@@ -309,7 +316,9 @@
             #000
           );
         background-size: 10px 10px;
-        background-position: 0 0, 5px 5px;
+        background-position:
+          0 0,
+          5px 5px;
       }
       .stub .ticket-no {
         margin-top: 14px;
@@ -557,7 +566,7 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
     <script>
-      const BACKEND_URL_OF_SUCCESS = "https://api.ultimatejaipurians.in";
+      //const BACKEND_URL_OF_SUCCESS = "https://api.ultimatejaipurians.in";
       //const BACKEND_URL_OF_SUCCESS = "http://localhost:8000";
 
       //--------------------------------------
@@ -720,7 +729,7 @@
           const file = new File(
             [pdfBlob],
             `ticket-${new Date().toISOString().slice(0, 10)}.pdf`,
-            { type: "application/pdf" }
+            { type: "application/pdf" },
           );
           const formData = new FormData();
           formData.append("file", file);
