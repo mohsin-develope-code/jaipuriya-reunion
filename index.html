@@ -1820,8 +1820,8 @@ nav.site-nav { z-index: 100;}
 
             <div class="upi-steps">
               <div style="display: flex; flex-direction: column;">
-                <span style="color: #000;">Bank: HDFC Bank</span>
-                <span style="color: #000;">Account Name: Ram Kumar</span>
+                <span style="color: #000; font-weight: 500;">Bank Name: HDFC</span>
+                <span style="color: #000; font-weight: 500;">Account Name: Ram Kumar</span>
               </div>
   <h3 style="color:#222; margin-bottom:8px;">Follow these steps to pay</h3>
   <ol style="padding-left:18px;">
@@ -2153,7 +2153,7 @@ async function paymentRazorpay() {
 
   //------ qr pop up open from here----------------
 
-  document.getElementById("qrTotalAmt").textContent = totalPayPrice;
+  document.getElementById("qrTotalAmt").textContent = ` ₹ ${totalPayPrice}`;
 
    let qrCode = `upi://pay?pa=9336021421@pthdfc&cu=INR`;
   // let qrCode = '9336021421@pthdfc'
