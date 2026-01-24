@@ -2084,8 +2084,8 @@ async function paymentRazorpay() {
   const payTm = document.getElementById("payTm");
 
   let upiLink = `tez://upi/pay?pa=9336021421@pthdfc&pn=UltimateJaipurians&am=${totalPayPrice}&cu=INR`;
-  let phonePayLink = `phonepe://upi/pay?pa=9336021421@pthdfc&pn=UltimateJaipurians&am=${totalPayPrice}&cu=INR`;
-   let paytmLink = `paytmmp://upi/pay?pa=9336021421@pthdfc&pn=UltimateJaipurians&am=${totalPayPrice}&cu=INR`;
+  let phonePayLink = `phonepe://pay?pa=9336021421@pthdfc&pn=UltimateJaipurians&am=${totalPayPrice}&cu=INR`;
+   let paytmLink = `paytmmp://pay?pa=9336021421@pthdfc&pn=UltimateJaipurians&am=${totalPayPrice}&cu=INR`;
 
   gpay.setAttribute("href", upiLink);
   phonePay.setAttribute("href", phonePayLink);
