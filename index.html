@@ -1102,6 +1102,7 @@ nav.site-nav { z-index: 100;}
       font-size: 16px;
       color: #555;
       font-weight: 400;
+      padding: 10px 30px;
       line-height: 1.6;
       margin-bottom: 24px;
       text-align: center;
@@ -1121,6 +1122,76 @@ nav.site-nav { z-index: 100;}
       }
     }
 
+
+
+
+    .upi-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .upi-label {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .upi-id {
+      font-size: 16px;
+      font-weight: 600;
+      color: #222;
+      background: #f7f9fc;
+      padding: 10px;
+      border-radius: 8px;
+      word-break: break-all;
+      margin-bottom: 14px;
+    }
+
+    .copy-btn {
+      background: #0a66ff;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: #004ecc;
+    }
+
+    .copied {
+      margin-top: 10px;
+      font-size: 13px;
+      color: green;
+      display: none;
+    }
+
+    .upi-steps {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: left; /* Mobile default */
+}
+
+/* Desktop view */
+@media (min-width: 768px) {
+  .upi-steps {
+    text-align: left;
+    padding-left: 100px;
+  }
+}
 
 
 </style>
@@ -1717,12 +1788,12 @@ nav.site-nav { z-index: 100;}
 
 <!-- QR , UPI POP UP -->
 
-<div class="pop-register" id="qrPopup">
+<div class="pop-register" id="qrPopup" >
     <div class="popup-content">
 	  
        <span class="close-btn" id="qrClosePop" >&times;</span>
 
-      <div class="container">
+      <div class="container" style="text-align: center;">
          <div
               class="qr-box"
               style="
@@ -1733,34 +1804,38 @@ nav.site-nav { z-index: 100;}
               "
             >
               <canvas id="partyQR" style="text-align: center"></canvas>
-              <h4 style="color:#000"> UPI ID: 9336021421@pthdfc</h4>
+              <h4 style="color:#000"> UPI ID: <span id="upiId">9336021421@pthdfc</span> </h4>
+                  <button class="copy-btn" onclick="copyUPI()">
+                    Copy UPI ID
+                  </button>
+                  <div id="copiedMsg" class="copied">✔ UPI ID copied</div>
             </div>
-
 
             <div>
               <h3 style="color:#000; text-align: center;">Total Amount: <span id="qrTotalAmt"></span></h3>
             </div>
 
+            <div class="upi-steps">
+  <h3 style="color:#222; margin-bottom:8px;">Follow these steps to pay</h3>
+  <ol style="padding-left:18px;">
+    <li>Copy the UPI ID shown above</li>
+    <li>Open your UPI app (Google Pay, PhonePe etc.)</li>
+    <li>Select <strong>Pay using UPI ID</strong></li>
+    <li>Paste the copied UPI ID</li>
+    <li>Enter Above Total Amount</li>
+    <li>Confirm the payment using your UPI PIN</li>
+    <li>Send the screenshot Mr. Fahad Ahsan</li>
+  </ol>
+</div>
+
 
         <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
 
-          <button onclick="thankFunction()"  class="btn pay-button" style="background-color: black;">
+          <!-- <button onclick="thankFunction()"  class="btn pay-button" style="background-color: black; margin: 0 auto;">
                     <a id="gpay" style="text-decoration: none; color: white;">
-                      <span id="pay-btn" class="btn-text qrpay-btn">G Pay</span>
+                      <span id="pay-btn" class="btn-text qrpay-btn">Pay Now</span>
                     </a>
-          </button>
-
-          <button onclick="thankFunction()"  class="btn pay-button" style="background-color: black;" >
-                    <a id="phonePay" style="text-decoration: none; color: white; font-size: medium; ">
-                      <span id="pay-btn" class="btn-text qrpay-btn">Phone Pay</span>
-                    </a>
-          </button>
-
-          <button onclick="thankFunction()"  class="btn pay-button" style="background-color: black;">
-                    <a id="payTm" style="text-decoration: none; color: white;">
-                      <span id="pay-btn" class="btn-text qrpay-btn">PayTM</span>
-                    </a>
-          </button>
+          </button> -->
         </div>
 
         <div>
@@ -2080,24 +2155,24 @@ async function paymentRazorpay() {
   });
 
   const gpay = document.getElementById("gpay");
-  const phonePay = document.getElementById("phonePay");
-  const payTm = document.getElementById("payTm");
 
-  const upiId = "9336021421@pthdfc";
-  const upiName = encodeURIComponent("UltimateJaipurians");
-  const amount = Number(totalPayPrice);
-
-
-
-  let upiLink = `tez://upi/pay?pa=9336021421@pthdfc&pn=UltimateJaipurians&am=${totalPayPrice}&cu=INR`;
-  let phonePayLink = `phonepe://pay?pa=${upiId}&pn=${upiName}&am=${amount}&cu=INR`;
-   let paytmLink = `paytmmp://pay?pa=${upiId}&pn=${upiName}&am=${amount}&cu=INR`;
+  // let upiLink = `upi://pay?pa=9336021421@pthdfc&pn=MyStore&am=${totalPayPrice}&cu=INR`
+  let upiLink = 'https://www.upi.me/pay?pa=9336021421@pthdfc'
 
   gpay.setAttribute("href", upiLink);
-  phonePay.setAttribute("href", phonePayLink);
-  payTm.setAttribute("href", paytmLink);
 
+  // const phonePay = document.getElementById("phonePay");
+  // const payTm = document.getElementById("payTm");
+
+  // const upiId = "9336021421@pthdfc";
+  // const upiName = encodeURIComponent("UltimateJaipurians");
+  // const amount = Number(totalPayPrice);
+
+  // let upiLink = `tez://upi/pay?pa=9336021421@pthdfc&pn=UltimateJaipurians&am=${totalPayPrice}&cu=INR`;
+  // let phonePayLink = `phonepe://pay?pa=${upiId}&pn=${upiName}&am=${amount}&cu=INR`;
+  // let paytmLink = `paytmmp://pay?pa=${upiId}&pn=${upiName}&am=${amount}&cu=INR`;
   //------- qr pop up end  here -----------------------
+
 
   async function initiatePayment() {
     try {
@@ -2124,6 +2199,21 @@ async function paymentRazorpay() {
   initiatePayment();
 }
       
+
+
+//=============== Copy UPI ID =================================
+function copyUPI() {
+      const upiText = document.getElementById("upiId").innerText;
+
+      navigator.clipboard.writeText(upiText).then(() => {
+        const msg = document.getElementById("copiedMsg");
+        msg.style.display = "block";
+
+        setTimeout(() => {
+          msg.style.display = "none";
+        }, 2000);
+      });
+    }
 
 
      //Upload Photo Open
